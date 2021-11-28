@@ -5,3 +5,13 @@ export default function NavBtnsContainer(props) {
     </div>
   );
 }
+
+// {props.children.map((child) => {
+//   if (child.props) {
+//     return {
+//       ...child,
+//       props: { ...child.props, foldGroups: props.foldGroups },
+//     };
+//   } else {
+//     return child;
+//   }

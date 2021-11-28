@@ -21,6 +21,7 @@ export default function NavModules(props) {
                 icon={["fab", "algolia"]}
                 id={`nav-btn-module${module.id}`}
                 grouped={true}
+                handleClick={props.handleClick}
               />
             );
           })}
@@ -33,6 +34,7 @@ export default function NavModules(props) {
               name={module.name}
               icon={["fab", "algolia"]}
               id={`nav-btn-module${module.id}`}
+              handleClick={props.handleClick}
             />
           );
         })}
@@ -46,6 +48,7 @@ export default function NavModules(props) {
                 icon={["fab", "algolia"]}
                 id={`nav-btn-module${module.id}`}
                 grouped={true}
+                handleClick={props.handleClick}
               />
             );
           })}

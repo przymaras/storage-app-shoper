@@ -1,11 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
 
 export default function NavFilter(props) {
+  const [visible, setVisible] = useState(false);
+
+  function handleClick(e) {
+    setVisible(!visible);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log("Filter Submit");
+  }
+
   return (
     <div className="nav-filter-container">
-      <form action="#" className="filter" id="filter">
+      <form onSubmit={handleSubmit} action="#" className="filter" id="filter">
         <div
-          className="filter-options filter-options-folded"
+          className={`filter-options ${
+            visible ? null : "filter-options-folded"
+          }`}
           id="filter-options"
         >
           <div className="filter-opt chbox">
@@ -42,6 +56,8 @@ export default function NavFilter(props) {
             <FontAwesomeIcon icon="window-close" />
           </button>
           <button
+            onClick={handleClick}
+            type="button"
             className="filter-options-toggle-btn btn"
             id="filter-options-toggle-btn"
           >
