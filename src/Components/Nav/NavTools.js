@@ -18,8 +18,9 @@ export default function NavTools(props) {
               key={module.id}
               name={module.name}
               icon={["fab", "algolia"]}
-              id={`nav-btn-module${module.id}`}
+              id={`nav-btn-tool${module.id}`}
               grouped={true}
+              handleClick={props.handleClick}
             />
           );
         })}
