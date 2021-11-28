@@ -10,7 +10,7 @@ function App() {
   const [navToolsVisible, setNavToolsVisible] = useState(false);
 
   function toggleNav(nav) {
-    // there are font awesome icons inside button and they causing nested target
+    // there are font awesome icons inside button and they causing nested e.target when clicked on icon or its area
     if (
       nav.target.id === "nav-modules-open-btn" ||
       nav.target.parentNode.id === "nav-modules-open-btn" ||

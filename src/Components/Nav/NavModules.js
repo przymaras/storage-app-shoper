@@ -12,7 +12,12 @@ export default function NavModules(props) {
   return (
     <>
       <NavBtnsContainer overflow={true}>
-        <NavBtnsGroup name="GRUPA 1" id="buttons-group-1">
+        <NavBtnsGroup
+          foldGroup={props.foldGroup}
+          foldGroups={props.foldGroups}
+          name="GRUPA 1"
+          id="buttons-group-1"
+        >
           {modules.slice(0, 6).map((module) => {
             return (
               <NavBtn
@@ -39,7 +44,12 @@ export default function NavModules(props) {
           );
         })}
 
-        <NavBtnsGroup name="GRUPA 2" id="buttons-group-2">
+        <NavBtnsGroup
+          foldGroup={props.foldGroup}
+          foldGroups={props.foldGroups}
+          name="GRUPA 2"
+          id="buttons-group-2"
+        >
           {modules.slice(8, 10).map((module) => {
             return (
               <NavBtn
