@@ -1,0 +1,664 @@
+:root {
+  --main-container-max-width: 1410px;
+  --main-container-max-width-mobile: 750px;
+  --main-container-max-width-super-wide: 2200px;
+
+  --background-color: #272727;
+  --primary-color: #c4c4c4;
+  --primary-color-darker: #8b8888;
+  --primary-color-dark: #5c5c5c;
+  --primary-color-light: #ececec;
+
+  --font-color-dark: #000000;
+  --font-color-light: #ececec;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  background: var(--background-color);
+  color: var(--font-color-dark);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  font-family: Roboto, sans-serif;
+  font-size: 1.8rem;
+  height: 100vh;
+}
+
+.container {
+  background: var(--primary-color);
+  height: 100%;
+  width: 100%;
+  max-width: var(--main-container-max-width-mobile);
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-grow: 1;
+}
+
+header {
+  display: grid;
+}
+
+.header-title {
+  grid-row: 1;
+  grid-column: 1;
+  font-size: 1.6rem;
+  padding: 1em;
+  background: var(--primary-color);
+  text-align: center;
+  z-index: 9999;
+}
+
+.header-title .svg-inline--fa {
+  font-size: 1.1em;
+  margin-right: 0.5em;
+}
+
+.section-title {
+  width: 100%;
+  background: var(--primary-color-dark);
+  font-size: 1.8rem;
+  color: var(--font-color-light);
+  padding: 0.5em 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.section-title .svg-inline--fa {
+  margin: 0 0.5em;
+}
+
+.nav-toggle {
+  grid-row: 1;
+  grid-column: 1;
+  align-self: center;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 9999;
+}
+
+.nav-toggle--button {
+  align-self: center;
+  padding: 0.1em;
+  margin: 0 0.1em;
+  font-size: 3rem;
+  background: transparent;
+  border: none;
+}
+
+.nav-toggle--button .svg-inline--fa {
+  margin: 0 5px;
+}
+
+.nav-overlay {
+  position: absolute;
+  z-index: 9998;
+  background: rgba(150, 150, 150, 0.8);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  max-width: var(--main-container-max-width);
+  transition: all 250ms;
+  transform: translateX(0);
+  transform: translateY(0);
+  opacity: 1;
+  visibility: unset;
+}
+
+.hide-overlay {
+  position: fixed;
+  transform: translateY(-50%);
+  visibility: hidden;
+  opacity: 0;
+}
+
+#nav-modules,
+#nav-tools {
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-toolbar {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  background: var(--primary-color);
+  width: 255px;
+  position: absolute;
+  height: 100%;
+}
+
+#nav-modules .nav-toolbar {
+  left: 0;
+}
+
+#nav-tools .nav-toolbar {
+  right: 0;
+}
+
+.nav-tools-container {
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.nav-buttons {
+  display: flex;
+  flex-direction: column;
+  transition: all 500ms;
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
+  height: 80px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  overflow-y: auto;
+  padding: 0 5px;
+  position: relative;
+}
+
+.no-overflow {
+  height: unset;
+  overflow-y: unset;
+}
+
+.group-title {
+  background: var(--primary-color-darker);
+  color: var(--font-color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em;
+  font-size: 2rem;
+  border-top-right-radius: 6px;
+  border-top-left-radius: 6px;
+}
+
+.group-title .svg-inline--fa {
+  margin: 0 0.7em 0 0;
+  transform: scale(
+    1.3
+  ); /*scale does not affect button height in JS calculations */
+}
+
+.nav-buttons-group {
+  margin: 0.2em 0;
+  background: var(--primary-color-darker);
+  padding: 3px;
+  border-radius: 6px;
+  /* height: 200px; it is calculated in JS function setButtonsGroupsHeights() for transition to work properly*/
+  transition: height 500ms;
+  display: flex;
+  flex-direction: column;
+}
+
+.buttons-group-folded {
+  height: 60px !important; /* "auto" disables transition */
+}
+
+.buttons-group-folded .nav-buttons {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 0;
+  transform: translateY(-50px);
+}
+
+.nav-btn {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 0.75em 0;
+  margin: 4px 0;
+  background: var(--primary-color-darker);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--font-color-dark);
+}
+
+.grouped {
+  background: var(--primary-color-dark);
+  color: var(--font-color-light);
+  flex-grow: 0;
+  overflow: unset;
+  height: unset;
+}
+
+.nav-btn .svg-inline--fa {
+  margin: 0 1em 0 0;
+  transform: scale(
+    1.5
+  ); /*scale does not affect button height in JS calculations */
+}
+
+.nav-filter-container {
+  margin: 0 5px;
+  margin-bottom: 0.2em;
+}
+
+.filter {
+  background: var(--primary-color-light);
+  padding: 0.2em;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+}
+
+.filter-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-btn .svg-inline--fa {
+  font-size: 2em;
+}
+
+.filter-opt {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.2em;
+  margin-bottom: 0.7em;
+}
+
+.filter-opt * {
+  font-size: 2.5rem;
+}
+
+.filter-opt select {
+  font-family: Roboto, sans-serif;
+  width: 100%;
+  margin-left: 0.3em;
+}
+
+#arch-checkbox {
+  transform: scale(2);
+  margin-right: 0.4em;
+}
+
+.filter-options-toggle-btn {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.filter-options-folded {
+  display: none;
+}
+
+.btn,
+.buttons-group-folded {
+  font-family: Roboto, sans-serif;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.buttons-group-folded:hover {
+  outline: 1px solid var(--font-color-dark);
+  border-radius: 6px;
+}
+
+.btn:active,
+.buttons-group-folded:active {
+  transform: scale(0.93);
+  outline: 1px solid var(--font-color-dark);
+  border-radius: 6px;
+}
+
+/* Module classes */
+
+.module {
+  width: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.module--container {
+  background: var(--primary-color);
+  width: 100%;
+  font-size: 1.6rem;
+  overflow-y: auto;
+
+  height: 100px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
+}
+
+.search-form {
+  background: var(--primary-color);
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 0.2em 0.2em;
+}
+
+.search-label {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-right: 0.5em;
+}
+
+.search-input {
+  font-family: Roboto, sans-serif;
+  font-size: 1.8rem;
+  width: 100%;
+  padding: 0.2em;
+  align-self: center;
+}
+
+.module--row {
+  display: grid;
+  grid-template: repeat(4, auto) / 40px 1fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr;
+  grid-template-areas:
+    "cbox name name name name name name name name"
+    "cbox aaaa bbbb cccc cccc dddd dddd eeee ffff"
+    "cbox gggg hhhh hhhh hhhh hhhh iiii iiii iiii"
+    "jjjj jjjj kkkk kkkk llll llll llll llll llll";
+  max-width: 100%;
+  padding: 0.1em 0.2em;
+  background: var(--primary-color);
+}
+
+.module--row input[type="checkbox"] {
+  transform: scale(2);
+}
+
+.module--row .cell {
+  margin: -1px;
+  padding: 0.1em;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid var(--primary-color-dark);
+}
+
+.row-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
+.module--row .cell {
+  background: var(--primary-color);
+  color: var(--font-color-dark);
+}
+
+.module--row.heading .cell {
+  background: var(--primary-color-dark);
+  color: #fff;
+  font-size: 1.2rem;
+  letter-spacing: 0.03em;
+  border: 1px solid var(--primary-color-darker);
+}
+
+.module--row:nth-child(even) .cell {
+  background: var(--primary-color-light);
+}
+
+.module--row .cell:nth-child(1) {
+  grid-area: cbox;
+}
+
+.module--row .cell:nth-child(2) {
+  grid-area: name;
+  justify-content: start;
+}
+
+.module--row .cell:nth-child(3) {
+  grid-area: aaaa;
+}
+
+.module--row .cell:nth-child(4) {
+  grid-area: bbbb;
+}
+
+.module--row .cell:nth-child(5) {
+  grid-area: cccc;
+}
+
+.module--row .cell:nth-child(6) {
+  grid-area: dddd;
+}
+
+.module--row .cell:nth-child(7) {
+  grid-area: eeee;
+}
+
+.module--row .cell:nth-child(8) {
+  grid-area: ffff;
+}
+
+.module--row .cell:nth-child(9) {
+  grid-area: gggg;
+}
+
+.module--row .cell:nth-child(10) {
+  grid-area: hhhh;
+}
+
+.module--row .cell:nth-child(11) {
+  grid-area: iiii;
+}
+
+.module--row .cell:nth-child(12) {
+  grid-area: jjjj;
+}
+
+.module--row .cell:nth-child(13) {
+  grid-area: kkkk;
+}
+
+.module--row .cell:nth-child(14) {
+  grid-area: llll;
+}
+
+/* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+/* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+/* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+/* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+/* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+
+@media (max-width: 400px) {
+  /* html,
+  body {
+    height: -webkit-fill-available;  
+  } */
+
+  /* fix for mobile overflow under bottom navbar  */
+
+  .nav-filter-container {
+    margin-bottom: 60px;
+  }
+}
+
+@media (min-width: 650px) {
+  /* module module module module module */
+
+  .module--row {
+    grid-template: repeat(2, auto) / 40px repeat(5, 0.33fr) 1fr 1fr 0.5fr 0.5fr;
+    grid-template-areas: unset;
+    grid-template-areas:
+      "cbox gggg name name name name name name jjjj kkkk"
+      "aaaa bbbb cccc dddd eeee ffff hhhh iiii llll llll";
+  }
+
+  .module--row input[type="checkbox"] {
+    transform: scale(1.2);
+  }
+
+  .module--row .cell {
+    margin: -0.4px;
+  }
+}
+@media (min-width: 1210px) {
+  /* unset unset  unset unset unset unset */
+
+  .nav-overlay {
+    position: unset;
+    z-index: unset;
+    background: unset;
+    width: unset;
+    height: unset;
+    max-width: unset;
+    transition: unset;
+    transform: unset;
+    opacity: unset;
+    visibility: unset;
+  }
+
+  .hide-overlay {
+    visibility: unset;
+    opacity: unset;
+  }
+
+  #nav-tools.hide-overlay {
+    transform: unset;
+  }
+
+  #nav-modules.hide-overlay {
+    transform: unset;
+  }
+
+  .nav-toolbar {
+    position: unset;
+  }
+
+  #nav-modules .nav-toolbar {
+    left: unset;
+  }
+
+  #nav-tools .nav-toolbar {
+    right: unset;
+  }
+
+  .nav-btn {
+    font-size: 1.5rem;
+    padding: 0.9em 0;
+  }
+
+  .group-title {
+    font-size: 1.5rem;
+    padding: 0.7em 0;
+  }
+
+  .buttons-group-folded {
+    height: 45px !important; /* "auto" disables transition */
+  }
+
+  .nav-toolbar {
+    width: 180px;
+  }
+
+  .filter-options-toggle-btn {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+
+  /* body container  body container*/
+
+  body {
+    padding: 5px;
+  }
+
+  .container {
+    max-width: var(--main-container-max-width);
+    background: none;
+  }
+
+  .header-title {
+    font-size: 2.5rem;
+    padding: 0.3em;
+    text-align: left;
+    letter-spacing: 0.6em;
+    margin-bottom: 5px;
+    border-radius: 6px;
+  }
+
+  .header-title .svg-inline--fa {
+    font-size: 1.3em;
+    margin-left: 0.5em;
+  }
+
+  .section-title {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+
+  /* nav nav nav nav nav nav nav nav nav */
+
+  .nav-toggle {
+    display: none;
+  }
+
+  #nav-modules {
+    order: -1;
+    padding-right: 5px;
+  }
+
+  #nav-tools {
+    order: 3;
+    padding-left: 5px;
+  }
+
+  .nav-toolbar {
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+
+  .filter-opt {
+    margin: 0.5em 0.2em;
+  }
+
+  .filter-opt * {
+    font-size: 1.6rem;
+  }
+
+  #arch-checkbox {
+    transform: scale(1.3);
+    margin-right: 0.2em;
+  }
+
+  .search-label,
+  .search-input {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1800px) {
+  .container {
+    max-width: var(--main-container-max-width-super-wide);
+  }
+
+  .module--row {
+    grid-template:
+      repeat(1, auto) / 40px 0.5fr 4fr repeat(2, 1fr) repeat(6, 0.6fr)
+      repeat(3, 1.5fr);
+    grid-template-areas: unset;
+    grid-template-areas: "cbox gggg name jjjj kkkk aaaa bbbb cccc dddd eeee ffff hhhh iiii llll";
+  }
+}

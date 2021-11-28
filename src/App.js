@@ -1,5 +1,14 @@
+import "./css/style.css";
+import Header from "./Components/Header";
+import Main from "./Components/Main";
+
 function App() {
-  return <h1>storage app</h1>;
+  return (
+    <>
+      <Header />
+      <Main />
+    </>
+  );
 }
 
 export default App;
