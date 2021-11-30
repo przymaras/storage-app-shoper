@@ -1,4 +1,6 @@
 import "./css/style.css";
+import "./css/module-wares-row.css";
+import "./css/module-ordersSales-row.css";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
 

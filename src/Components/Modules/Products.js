@@ -6,6 +6,41 @@ export default function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
   const [products, setProducts] = useState([]);
+  const setActiveTools = props.setActiveTools;
+
+  const headingCells = [
+    { id: "cb", name: "cb" },
+    { id: "name", name: "Nazwa" },
+    { id: "unit", name: "Jedn." },
+    { id: "quantity", name: "Stan" },
+    { id: "ordered", name: "Zamówi\xADone" },
+    { id: "lacking", name: "Braku\xADjące" },
+    { id: "needed", name: "Zapotrze\xADbowanie" },
+    { id: "price", name: "Cena" },
+    { id: "product_id", name: "Kod" },
+    { id: "supplier", name: "Dostawca" },
+    { id: "supplier_code", name: "Kod u dostawcy" },
+    { id: "type", name: "Typ" },
+    { id: "mag_group", name: "Grupa" },
+    { id: "description", name: "Uwagi" },
+  ];
+
+  const tools = [
+    {
+      id: "tool-1",
+      name: "NARZĘDZIE 1",
+      icon: ["fab", "algolia"],
+    },
+    {
+      id: "tool-2",
+      name: "NARZĘDZIE 2",
+      icon: ["fab", "algolia"],
+    },
+  ];
+  useEffect(() => {
+    setActiveTools(tools);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     async function getData() {
@@ -55,23 +90,6 @@ export default function Products(props) {
     setProducts(newProducts);
   }
 
-  const headingCells = [
-    { id: "cb", name: "cb" },
-    { id: "name", name: "Nazwa" },
-    { id: "unit", name: "Jedn." },
-    { id: "quantity", name: "Stan" },
-    { id: "ordered", name: "Zamówi\xADone" },
-    { id: "lacking", name: "Braku\xADjące" },
-    { id: "needed", name: "Zapotrze\xADbowanie" },
-    { id: "price", name: "Cena" },
-    { id: "product_id", name: "Kod" },
-    { id: "supplier", name: "Dostawca" },
-    { id: "supplier_code", name: "Kod u dostawcy" },
-    { id: "type", name: "Typ" },
-    { id: "mag_group", name: "Grupa" },
-    { id: "description", name: "Uwagi" },
-  ];
-
   function headingRow() {
     return headingCells.map((cell) => {
       if (cell.id === "cb") {
@@ -99,7 +117,7 @@ export default function Products(props) {
     });
   }
 
-  function productRow(p) {
+  function productRowCells(p) {
     const cellsArray = [];
     cellsArray.push(
       <Cell
@@ -187,14 +205,20 @@ export default function Products(props) {
   function productRows(p) {
     let rows = [];
     for (let product of products) {
-      rows.push(<Row key={product.product_id}>{productRow(product)}</Row>);
+      rows.push(
+        <Row key={product.product_id} rowClass="module-wares-row">
+          {productRowCells(product)}
+        </Row>
+      );
     }
     return rows;
   }
 
   return (
     <>
-      <Row heading={true}>{headingRow()}</Row>
+      <Row heading={true} rowClass="module-wares-row">
+        {headingRow()}
+      </Row>
       {dataAvailable ? productRows(products) : info}
     </>
   );

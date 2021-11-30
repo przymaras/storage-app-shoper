@@ -1,0 +1,85 @@
+.module-ordersSales-row {
+  grid-template: auto / 40px repeat(6, 1fr);
+  grid-template-areas:
+    "cbox name name name name name name name name"
+    "cbox aaaa bbbb cccc cccc dddd dddd eeee ffff"
+    "cbox gggg hhhh hhhh hhhh hhhh iiii iiii iiii"
+    "jjjj jjjj kkkk kkkk llll llll llll llll llll";
+}
+
+.module-ordersSales-row .cell:nth-child(1) {
+  grid-area: cbox;
+}
+
+/* .module-ordersSales-row .cell:nth-child(2) {
+  grid-area: name;
+  justify-content: start;
+}
+
+.module-ordersSales-row .cell:nth-child(3) {
+  grid-area: aaaa;
+}
+
+.module-ordersSales-row .cell:nth-child(4) {
+  grid-area: bbbb;
+}
+
+.module-ordersSales-row .cell:nth-child(5) {
+  grid-area: cccc;
+}
+
+.module-ordersSales-row .cell:nth-child(6) {
+  grid-area: dddd;
+}
+
+.module-ordersSales-row .cell:nth-child(7) {
+  grid-area: eeee;
+}
+
+.module-ordersSales-row .cell:nth-child(8) {
+  grid-area: ffff;
+}
+
+.module-ordersSales-row .cell:nth-child(9) {
+  grid-area: gggg;
+}
+
+.module-ordersSales-row .cell:nth-child(10) {
+  grid-area: hhhh;
+}
+
+.module-ordersSales-row .cell:nth-child(11) {
+  grid-area: iiii;
+}
+
+.module-ordersSales-row .cell:nth-child(12) {
+  grid-area: jjjj;
+}
+
+.module-ordersSales-row .cell:nth-child(13) {
+  grid-area: kkkk;
+}
+
+.module-ordersSales-row .cell:nth-child(14) {
+  grid-area: llll;
+} */
+
+/* @media (min-width: 650px) {
+  .module-ordersSales-row {
+    grid-template: repeat(2, auto) / 40px repeat(5, 0.33fr) 1fr 1fr 0.5fr 0.5fr;
+    grid-template-areas: unset;
+    grid-template-areas:
+      "cbox gggg name name name name name name jjjj kkkk"
+      "aaaa bbbb cccc dddd eeee ffff hhhh iiii llll llll";
+  }
+}
+
+@media (min-width: 1800px) {
+  .module-ordersSales-row {
+    grid-template:
+      repeat(1, auto) / 40px 0.5fr 4fr repeat(2, 1fr) repeat(6, 0.6fr)
+      repeat(3, 1.5fr);
+    grid-template-areas: unset;
+    grid-template-areas: "cbox gggg name jjjj kkkk aaaa bbbb cccc dddd eeee ffff hhhh iiii llll";
+  }
+} */

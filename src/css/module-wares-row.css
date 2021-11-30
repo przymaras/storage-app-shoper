@@ -1,0 +1,85 @@
+.module-wares-row {
+  grid-template: repeat(4, auto) / 40px 1fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr;
+  grid-template-areas:
+    "cbox name name name name name name name name"
+    "cbox aaaa bbbb cccc cccc dddd dddd eeee ffff"
+    "cbox gggg hhhh hhhh hhhh hhhh iiii iiii iiii"
+    "jjjj jjjj kkkk kkkk llll llll llll llll llll";
+}
+
+.module-wares-row .cell:nth-child(1) {
+  grid-area: cbox;
+}
+
+.module-wares-row .cell:nth-child(2) {
+  grid-area: name;
+  justify-content: start;
+}
+
+.module-wares-row .cell:nth-child(3) {
+  grid-area: aaaa;
+}
+
+.module-wares-row .cell:nth-child(4) {
+  grid-area: bbbb;
+}
+
+.module-wares-row .cell:nth-child(5) {
+  grid-area: cccc;
+}
+
+.module-wares-row .cell:nth-child(6) {
+  grid-area: dddd;
+}
+
+.module-wares-row .cell:nth-child(7) {
+  grid-area: eeee;
+}
+
+.module-wares-row .cell:nth-child(8) {
+  grid-area: ffff;
+}
+
+.module-wares-row .cell:nth-child(9) {
+  grid-area: gggg;
+}
+
+.module-wares-row .cell:nth-child(10) {
+  grid-area: hhhh;
+}
+
+.module-wares-row .cell:nth-child(11) {
+  grid-area: iiii;
+}
+
+.module-wares-row .cell:nth-child(12) {
+  grid-area: jjjj;
+}
+
+.module-wares-row .cell:nth-child(13) {
+  grid-area: kkkk;
+}
+
+.module-wares-row .cell:nth-child(14) {
+  grid-area: llll;
+}
+
+@media (min-width: 650px) {
+  .module-wares-row {
+    grid-template: repeat(2, auto) / 40px repeat(5, 0.33fr) 1fr 1fr 0.5fr 0.5fr;
+    grid-template-areas: unset;
+    grid-template-areas:
+      "cbox gggg name name name name name name jjjj kkkk"
+      "aaaa bbbb cccc dddd eeee ffff hhhh iiii llll llll";
+  }
+}
+
+@media (min-width: 1800px) {
+  .module-wares-row {
+    grid-template:
+      repeat(1, auto) / 40px 0.5fr 4fr repeat(2, 1fr) repeat(6, 0.6fr)
+      repeat(3, 1.5fr);
+    grid-template-areas: unset;
+    grid-template-areas: "cbox gggg name jjjj kkkk aaaa bbbb cccc dddd eeee ffff hhhh iiii llll";
+  }
+}

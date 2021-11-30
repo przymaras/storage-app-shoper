@@ -3,7 +3,7 @@ import NavBtnsContainer from "./NavBtnsContainer";
 import { useState, useEffect } from "react";
 
 export default function NavBtnsGroup(props) {
-  const [folded, setFolded] = useState(true);
+  const [folded, setFolded] = useState(props.startFolded);
 
   function handleClick(e) {
     let ev = {};

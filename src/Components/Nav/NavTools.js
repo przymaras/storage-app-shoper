@@ -3,23 +3,18 @@ import NavBtnsContainer from "./NavBtnsContainer";
 import NavFilter from "./NavFilter";
 
 export default function NavTools(props) {
-  let tools = [];
-
-  for (let i = 0; i < 6; i++) {
-    tools.push({ id: i + 1, name: `NARZĘDZIE ${i + 1}` });
-  }
+  let tools = props.activeTools;
 
   return (
     <>
       <NavBtnsContainer overflow={true}>
-        {tools.map((module) => {
+        {tools.map((tool) => {
           return (
             <NavBtn
-              key={module.id}
-              name={module.name}
-              icon={["fab", "algolia"]}
-              id={`nav-btn-tool${module.id}`}
-              grouped={true}
+              key={tool.id}
+              name={tool.name}
+              icon={tool.icon}
+              id={tool.id}
               handleClick={props.handleClick}
             />
           );
