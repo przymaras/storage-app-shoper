@@ -7,17 +7,20 @@ import Main from "./Components/Main";
 import { useState } from "react";
 import React from "react";
 
+import fixFAonClick from "./fixFAonClick";
+
 function App() {
   const [navModulesVisible, setNavModulesVisible] = useState(false);
   const [navToolsVisible, setNavToolsVisible] = useState(false);
 
-  function toggleNav(nav) {
-    // there are font awesome icons inside button and they causing nested e.target when clicked on icon or its area
-    if (
-      nav.target.id === "nav-modules-open-btn" ||
-      nav.target.parentNode.id === "nav-modules-open-btn" ||
-      nav.target.parentNode.parentNode.id === "nav-modules-open-btn"
-    ) {
+  function handleClick(e) {
+    e = fixFAonClick(e);
+
+    toggleNav(e);
+  }
+
+  function toggleNav(e) {
+    if (e.target.id === "nav-modules-open-btn") {
       setNavModulesVisible(!navModulesVisible);
       setNavToolsVisible(false);
     } else {
@@ -28,7 +31,7 @@ function App() {
 
   return (
     <>
-      <Header toggleNav={toggleNav} />
+      <Header handleClick={handleClick} />
       <Main
         navModulesVisible={navModulesVisible}
         navToolsVisible={navToolsVisible}

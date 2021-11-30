@@ -66,7 +66,7 @@ export default function NavModules(props) {
       startFolded: true,
     },
     {
-      id: "contractors",
+      id: "module-contractors",
       name: "Kontrahenci",
       icon: ["fab", "algolia"],
     },

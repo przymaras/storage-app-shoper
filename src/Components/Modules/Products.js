@@ -1,5 +1,5 @@
 import Row from "./Row";
-import Cell from "./RowCell";
+import RowCell from "./RowCell";
 import { useState, useEffect } from "react";
 
 export default function Products(props) {
@@ -8,35 +8,52 @@ export default function Products(props) {
   const [products, setProducts] = useState([]);
   const setActiveTools = props.setActiveTools;
 
-  const headingCells = [
-    { id: "cb", name: "cb" },
-    { id: "name", name: "Nazwa" },
-    { id: "unit", name: "Jedn." },
-    { id: "quantity", name: "Stan" },
-    { id: "ordered", name: "Zamówi\xADone" },
-    { id: "lacking", name: "Braku\xADjące" },
-    { id: "needed", name: "Zapotrze\xADbowanie" },
-    { id: "price", name: "Cena" },
-    { id: "product_id", name: "Kod" },
-    { id: "supplier", name: "Dostawca" },
-    { id: "supplier_code", name: "Kod u dostawcy" },
-    { id: "type", name: "Typ" },
-    { id: "mag_group", name: "Grupa" },
-    { id: "description", name: "Uwagi" },
-  ];
-
   const tools = [
     {
-      id: "tool-1",
+      id: "tool-wares1",
       name: "NARZĘDZIE 1",
       icon: ["fab", "algolia"],
     },
     {
-      id: "tool-2",
+      id: "tool-wares2",
       name: "NARZĘDZIE 2",
       icon: ["fab", "algolia"],
     },
   ];
+
+  const orderOfCells = [
+    { id: "name" },
+    { id: "unit" },
+    { id: "quantity" },
+    { id: "ordered" },
+    { id: "lacking" },
+    { id: "needed" },
+    { id: "price" },
+    { id: "product_id" },
+    { id: "supplier" },
+    { id: "supplier_code" },
+    { id: "type" },
+    { id: "mag_group" },
+    { id: "description" },
+  ];
+
+  const headingCells = {
+    heading: true,
+    name: "Nazwa",
+    unit: "Jedn.",
+    quantity: "Stan",
+    ordered: "Zamówi\xADone",
+    lacking: "Braku\xADjące",
+    needed: "Zapotrze\xADbowanie",
+    price: "Cena",
+    product_id: "Kod",
+    supplier: "Dostawca",
+    supplier_code: "Kod u dostawcy",
+    type: "Typ",
+    mag_group: "Grupa",
+    description: "Uwagi",
+  };
+
   useEffect(() => {
     setActiveTools(tools);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,6 +67,7 @@ export default function Products(props) {
     }
     getData()
       .then((data) => {
+        //Temporarly fill with dummy data
         const prods = data.map((product) => {
           return {
             ...product,
@@ -70,6 +88,7 @@ export default function Products(props) {
 
   function handleClick(e) {
     sortProducts(e.target.id);
+    // console.log("click!");
   }
 
   function sortProducts(sortBy) {
@@ -90,124 +109,66 @@ export default function Products(props) {
     setProducts(newProducts);
   }
 
-  function headingRow() {
-    return headingCells.map((cell) => {
-      if (cell.id === "cb") {
-        return (
-          <Cell
-            onClick={handleClick}
-            key={`heading_${cell.id}`}
-            type="checkbox"
-            name={cell.name}
-            id={cell.id}
-          />
-        );
-      } else {
-        return (
-          <Cell
-            onClick={handleClick}
-            key={`heading_${cell.id}`}
-            name={cell.name}
-            id={cell.id}
-          >
-            {cell.name}
-          </Cell>
-        );
-      }
-    });
-  }
+  function renderRowCells(cells) {
+    let unsortedCells = [];
 
-  function productRowCells(p) {
-    const cellsArray = [];
-    cellsArray.push(
-      <Cell
+    //Convert object to array of key/value pairs objects
+    for (const [key, value] of Object.entries(cells)) {
+      unsortedCells.push({ id: key, value: value });
+    }
+
+    //Sort array according to orderOfCells order by ID. It destroys newCell array and removes cells that are not included in orderOfCells array
+    let sortedCells = [];
+    orderOfCells.forEach((hCell) => {
+      let found = false;
+      unsortedCells = unsortedCells.filter((uCell) => {
+        if (!found && uCell.id === hCell.id) {
+          sortedCells.push(uCell);
+          found = true;
+          return false;
+        } else return true;
+      });
+    });
+
+    //Fill empty cells with "---"
+    sortedCells = sortedCells.map((sCell) => {
+      if (sCell.value === "") return { ...sCell, value: "---" };
+      else return sCell;
+    });
+
+    //Render cells in order of orderOfCells
+    sortedCells = sortedCells.map((cell) => {
+      return (
+        <RowCell
+          handleClick={cells.heading ? handleClick : null}
+          key={`${cells.product_id}_${cell.id}`}
+          name={cell.id}
+          id={cell.id}
+        >
+          {cell.value}
+        </RowCell>
+      );
+    });
+
+    //Add checkbox as first cell
+    sortedCells.unshift(
+      <RowCell
+        key={`${cells.product_id}_cb`}
         type="checkbox"
-        name={`${p.product_id}_cb`}
-        id={`${p.product_id}_cb`}
-        key={`${p.product_id}_cb`}
+        name={cells.product_id}
+        id={cells.product_id}
       />
     );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_name`} id={`${p.product_id}_name`}>
-        {p.name}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_unit`} id={`${p.product_id}_unit`}>
-        {p.unit}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_quantity`} id={`${p.product_id}_quantity`}>
-        {p.quantity}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_ordered`} id={`${p.product_id}_ordered`}>
-        {p.ordered}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_lacking`} id={`${p.product_id}_lacking`}>
-        {p.lacking}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_needed`} id={`${p.product_id}_needed`}>
-        {p.needed}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_price`} id={`${p.product_id}_price`}>
-        {p.price.toFixed(2)}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_id`} id={`${p.product_id}_id`}>
-        {p.product_id}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_supplier`} id={`${p.product_id}_supplier`}>
-        {p.supplier}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell
-        key={`${p.product_id}_supplier_code`}
-        id={`${p.product_id}_supplier_code`}
-      >
-        {p.supplier_code ? p.supplier_code : "---"}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_type`} id={`${p.product_id}_type`}>
-        {p.type}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell key={`${p.product_id}_mag_group`} id={`${p.product_id}_mag_group`}>
-        {p.mag_group}
-      </Cell>
-    );
-    cellsArray.push(
-      <Cell
-        key={`${p.product_id}_description`}
-        id={`${p.product_id}_description`}
-      >
-        {p.description ? p.description : "---"}
-      </Cell>
-    );
 
-    return cellsArray;
+    return sortedCells;
   }
 
-  function productRows(p) {
+  function renderProductsRows(p) {
     let rows = [];
     for (let product of products) {
       rows.push(
         <Row key={product.product_id} rowClass="module-wares-row">
-          {productRowCells(product)}
+          {renderRowCells(product)}
         </Row>
       );
     }
@@ -217,9 +178,9 @@ export default function Products(props) {
   return (
     <>
       <Row heading={true} rowClass="module-wares-row">
-        {headingRow()}
+        {renderRowCells(headingCells)}
       </Row>
-      {dataAvailable ? productRows(products) : info}
+      {dataAvailable ? renderProductsRows(products) : info}
     </>
   );
 }

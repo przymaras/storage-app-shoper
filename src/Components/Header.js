@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Header(props) {
-  const toggleNav = props.toggleNav;
+  const handleClick = props.handleClick;
   return (
     <header>
       <h1 className="header-title">
@@ -10,7 +10,7 @@ export default function Header(props) {
       </h1>
       <div className="nav-toggle">
         <button
-          onClick={toggleNav}
+          onClick={handleClick}
           className="nav-toggle--button btn"
           id="nav-modules-open-btn"
         >
@@ -19,7 +19,7 @@ export default function Header(props) {
         </button>
 
         <button
-          onClick={toggleNav}
+          onClick={handleClick}
           className="nav-toggle--button btn"
           id="nav-tools-open-btn"
         >

@@ -1,15 +1,11 @@
 .module-ordersSales-row {
-  grid-template: auto / 40px repeat(6, 1fr);
-  grid-template-areas:
-    "cbox name name name name name name name name"
-    "cbox aaaa bbbb cccc cccc dddd dddd eeee ffff"
-    "cbox gggg hhhh hhhh hhhh hhhh iiii iiii iiii"
-    "jjjj jjjj kkkk kkkk llll llll llll llll llll";
+  grid-template: auto / 40px repeat(5, 1fr);
+  /* grid-template-areas: "cbox"; */
 }
 
-.module-ordersSales-row .cell:nth-child(1) {
+/* .module-ordersSales-row .cell:nth-child(1) {
   grid-area: cbox;
-}
+} */
 
 /* .module-ordersSales-row .cell:nth-child(2) {
   grid-area: name;

@@ -5,6 +5,24 @@ import { useState, useEffect } from "react";
 export default function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
+  const setActiveTools = props.setActiveTools;
+
+  const tools = [
+    {
+      id: "tool-ordersSales1",
+      name: "NARZĘDZIE 1",
+      icon: ["fab", "algolia"],
+    },
+    {
+      id: "tool-ordersSales2",
+      name: "NARZĘDZIE 2",
+      icon: ["fab", "algolia"],
+    },
+  ];
+  useEffect(() => {
+    setActiveTools(tools);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const apiUrl = `http://localhost:3030/api?endPoint=`;
@@ -77,3 +95,13 @@ export default function OrdersSales(props) {
 
   return <>{ordersAvailable ? ordersRows(orders) : "Wczytuję zamowienia"}</>;
 }
+
+// endPointUrl = `order-products?filters={"order_id":"${d.list[0].order_id}"}`;
+//         url = `${apiUrl}${endPointUrl}`;
+//         fetch(url)
+//           .then((res) => {
+//             return res.json();
+//           })
+//           .then((d) => {
+//             setOrderProducts(d.list);
+//           })

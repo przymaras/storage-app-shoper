@@ -1,11 +1,13 @@
-import Nav from "./Nav/Nav";
+import NavContainer from "./Nav/NavContainer";
 import NavModules from "./Nav/NavModules";
 import NavTools from "./Nav/NavTools";
-import Module from "./Modules/Module";
+import ModuleContainer from "./Modules/ModuleContainer";
 import Products from "./Modules/Products";
 import OrdersSales from "./Modules/OrdersSales";
 
 import { useState } from "react";
+
+import fixFAonClick from "../fixFAonClick";
 
 export default function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
@@ -17,9 +19,8 @@ export default function Main(props) {
   }
 
   function handleClick(e) {
+    e = fixFAonClick(e);
     console.log(`clicked ${e.target.id}`);
-    // console.log(e);
-    // console.log(e.target.parentNode.parentNode.id);
 
     if (e.target.id.includes("module-")) {
       setActiveModule(e.target.id);
@@ -36,43 +37,44 @@ export default function Main(props) {
     switch (module) {
       case "module-wares":
         return (
-          <Module
+          <ModuleContainer
             name="Asortyment"
             icon="luggage-cart"
             searchBar={true}
             searchBarPlaceholder="Kod lub nazwa towaru ..."
           >
             <Products setActiveTools={setActiveTools} />
-          </Module>
+          </ModuleContainer>
         );
       case "module-ordersSales":
         return (
-          <Module
+          <ModuleContainer
             name="Zamówienia sprzedaży"
             icon="luggage-cart"
             searchBar={true}
             searchBarPlaceholder="Szukana fraza ..."
           >
-            <OrdersSales />
-          </Module>
+            <OrdersSales setActiveTools={setActiveTools} />
+          </ModuleContainer>
         );
 
       default:
+        if (activeTools[0]) setActiveTools([]);
         return (
-          <Module
+          <ModuleContainer
             name="Moduł nie znaleziony"
             icon="luggage-cart"
             searchBar={false}
           >
             Moduł nie został jeszcze zaimplementowany ... sorry ;)
-          </Module>
+          </ModuleContainer>
         );
     }
   }
 
   return (
     <main className="main">
-      <Nav
+      <NavContainer
         id="nav-modules"
         title="MODUŁY"
         icon="toolbox"
@@ -83,15 +85,15 @@ export default function Main(props) {
           foldGroups={foldGroups}
           handleClick={handleClick}
         />
-      </Nav>
-      <Nav
+      </NavContainer>
+      <NavContainer
         id="nav-tools"
         title="NARZĘDZIA"
         icon="tools"
         visible={props.navToolsVisible}
       >
         <NavTools activeTools={activeTools} handleClick={handleClick} />
-      </Nav>
+      </NavContainer>
       {renderModule(activeModule)}
     </main>
   );
