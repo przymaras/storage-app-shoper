@@ -93,6 +93,12 @@ export default function Products(props) {
     // console.log("click!");
   }
 
+  function handleSearchValueChange(value) {
+    if (value !== "") {
+      console.log(`product search: ${value}`);
+    }
+  }
+
   function sortProducts(sortBy) {
     let newProducts = [...products];
     if (typeof newProducts[0][sortBy] === "string") {
@@ -179,7 +185,10 @@ export default function Products(props) {
 
   return (
     <>
-      <SearchBar placeholder="Kod lub nazwa towaru..." />
+      <SearchBar
+        placeholder="Kod lub nazwa towaru..."
+        externalHandleSearchValueChange={handleSearchValueChange}
+      />
       <div className="rows-container">
         <Row heading={true} rowClass="module-wares-row">
           {renderRowCells(headingCells)}

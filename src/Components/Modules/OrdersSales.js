@@ -44,6 +44,12 @@ export default function OrdersSales(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  function handleSearchValueChange(value) {
+    if (value !== "") {
+      console.log(`orders search: ${value}`);
+    }
+  }
+
   function orderRowCells(o) {
     const cellsArray = [];
     cellsArray.push(
@@ -97,7 +103,10 @@ export default function OrdersSales(props) {
 
   return (
     <>
-      <SearchBar placeholder="Kod lub nazwa towaru..." />
+      <SearchBar
+        placeholder="Kod lub nazwa towaru..."
+        externalHandleSearchValueChange={handleSearchValueChange}
+      />
       <div className="rows-container">
         {ordersAvailable ? ordersRows(orders) : "Wczytuję zamowienia"}
       </div>
