@@ -63,32 +63,41 @@ export default function Products(props) {
   }, []);
 
   useEffect(() => {
-    async function getData() {
-      const res = await fetch("http://localhost:3030/products");
+    async function getData(url) {
+      const res = await fetch(url);
       const data = await res.json();
       return data;
     }
-    getData()
-      .then((data) => {
-        //Temporarly fill with dummy data
-        const prods = data.map((product) => {
-          return {
-            ...product,
-            ordered: 1000,
-            lacking: 1000,
-            needed: 1000,
-          };
+
+    if (props.filterState.mag_group) {
+      const url = `http://localhost:3030/products?mag_group=${props.filterState.mag_group}&supplier=${props.filterState.supplier}&type=${props.filterState.type}&showArchive=${props.filterState.showArchive}`;
+      getData(url)
+        .then((data) => {
+          //Temporarly fill with dummy data
+          const prods = data.map((product) => {
+            return {
+              ...product,
+              ordered: 1000,
+              lacking: 1000,
+              needed: 1000,
+            };
+          });
+          setDataAvailable(true);
+          setAllProducts(prods);
+          setProductsToDisplay(prods);
+        })
+        .catch((e) => {
+          setInfo("Nie mogę załadować danych :(");
+          console.log("Can't load data...");
         });
-        setDataAvailable(true);
-        setAllProducts(prods);
-        setProductsToDisplay(prods);
-      })
-      .catch((e) => {
-        setInfo("Nie mogę załadować danych :(");
-        console.log("Can't load data...");
-      });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    props.filterState.mag_group,
+    props.filterState.supplier,
+    props.filterState.type,
+    props.filterState.showArchive,
+  ]);
 
   function handleClick(e) {
     const sortBy = e.target.id;

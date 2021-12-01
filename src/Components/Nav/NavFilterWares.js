@@ -7,7 +7,7 @@ export default function NavFilter(props) {
   const defaultFilterState = {
     showArchive: false,
     type: "wszystkie",
-    group: "wszystkie",
+    mag_group: "wszystkie",
     supplier: "wszystkie",
   };
 
@@ -74,12 +74,12 @@ export default function NavFilter(props) {
             </select>
           </div>
           <div className="filter-opt select">
-            <label htmlFor="group">Grupa:</label>
+            <label htmlFor="mag_group">Grupa:</label>
             <select
               onChange={handleChange}
-              value={filterState.group}
-              name="group"
-              id="group"
+              value={filterState.mag_group}
+              name="mag_group"
+              id="mag_group"
             >
               <option value="wszystkie">Wszystkie</option>
               <option value="elektronika">Elektronika</option>
@@ -95,8 +95,8 @@ export default function NavFilter(props) {
               id="supplier"
             >
               <option value="wszystkie">Wszystkie</option>
-              <option value="tme">TME Sp. z o.o.</option>
-              <option value="piekarz">Piekarz s.j.</option>
+              <option value="TME Sp z o.o.">TME Sp. z o.o.</option>
+              <option value="PIEKARZ">Piekarz s.j.</option>
             </select>
           </div>
         </div>
