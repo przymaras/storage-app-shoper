@@ -1,9 +1,21 @@
 import NavBtn from "./NavBtn";
 import NavBtnsContainer from "./NavBtnsContainer";
-import NavFilter from "./NavFilter";
+import NavFilterWares from "./NavFilterWares";
 
 export default function NavTools(props) {
-  let tools = props.activeTools;
+  const tools = props.activeTools;
+  const activeModule = props.activeModule;
+  let filter;
+
+  switch (activeModule) {
+    case "module-wares":
+      filter = <NavFilterWares setFilterState={props.setFilterState} />;
+      break;
+
+    default:
+      filter = undefined;
+      break;
+  }
 
   return (
     <>
@@ -21,7 +33,7 @@ export default function NavTools(props) {
         })}
       </NavBtnsContainer>
 
-      <NavFilter />
+      {filter}
     </>
   );
 }

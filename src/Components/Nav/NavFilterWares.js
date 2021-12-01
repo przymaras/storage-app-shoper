@@ -1,17 +1,45 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function NavFilter(props) {
   const [visible, setVisible] = useState(false);
+
+  const defaultFilterState = {
+    showArchive: false,
+    type: "wszystkie",
+    group: "wszystkie",
+    supplier: "wszystkie",
+  };
+
+  const [filterState, setFilterState] = useState(defaultFilterState);
 
   function handleClick(e) {
     setVisible(!visible);
   }
 
+  function handleChange(e) {
+    const target = e.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
+    setFilterState((prevState) => ({ ...prevState, [name]: value }));
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     console.log("Filter Submit");
+    console.log(filterState);
+    props.setFilterState(filterState);
   }
+
+  function handleReset(e) {
+    setFilterState(defaultFilterState);
+  }
+
+  useEffect(() => {
+    props.setFilterState(filterState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="nav-filter-container">
@@ -23,12 +51,23 @@ export default function NavFilter(props) {
           id="filter-options"
         >
           <div className="filter-opt chbox">
-            <label htmlFor="arch">Archiwalne</label>
-            <input type="checkbox" name="arch" id="arch-checkbox" />
+            <label htmlFor="showArchive">Archiwalne</label>
+            <input
+              onChange={handleChange}
+              checked={filterState.showArchive}
+              type="checkbox"
+              name="showArchive"
+              id="arch-checkbox"
+            />
           </div>
           <div className="filter-opt select">
             <label htmlFor="type">Typ:</label>
-            <select name="type" id="type">
+            <select
+              onChange={handleChange}
+              value={filterState.type}
+              name="type"
+              id="type"
+            >
               <option value="wszystkie">Wszystkie</option>
               <option value="surowiec">Surowiec</option>
               <option value="produkt">Produkt</option>
@@ -36,7 +75,12 @@ export default function NavFilter(props) {
           </div>
           <div className="filter-opt select">
             <label htmlFor="group">Grupa:</label>
-            <select name="group" id="group">
+            <select
+              onChange={handleChange}
+              value={filterState.group}
+              name="group"
+              id="group"
+            >
               <option value="wszystkie">Wszystkie</option>
               <option value="elektronika">Elektronika</option>
               <option value="Gotowe">Gotowe</option>
@@ -44,7 +88,12 @@ export default function NavFilter(props) {
           </div>
           <div className="filter-opt select">
             <label htmlFor="supplier">Dostawca:</label>
-            <select name="supplier" id="supplier">
+            <select
+              onChange={handleChange}
+              value={filterState.supplier}
+              name="supplier"
+              id="supplier"
+            >
               <option value="wszystkie">Wszystkie</option>
               <option value="tme">TME Sp. z o.o.</option>
               <option value="piekarz">Piekarz s.j.</option>
@@ -52,7 +101,7 @@ export default function NavFilter(props) {
           </div>
         </div>
         <div className="filter-header">
-          <button type="reset" className="filter-btn btn">
+          <button onClick={handleReset} type="reset" className="filter-btn btn">
             <FontAwesomeIcon icon="window-close" />
           </button>
           <button

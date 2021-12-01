@@ -94,7 +94,7 @@ export default function Products(props) {
     const sortBy = e.target.id;
     sortProducts(allProducts, setAllProducts, sortBy);
     sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
-    // console.log("click!");
+    console.log(props.filterState);
   }
 
   function handleSearchValueChange(value) {

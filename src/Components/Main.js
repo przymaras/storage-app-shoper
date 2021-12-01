@@ -12,6 +12,7 @@ import fixFAonClick from "../fixFAonClick";
 export default function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
   const [activeTools, setActiveTools] = useState([]);
+  const [filterState, setFilterState] = useState([]);
   const foldGroups = [];
 
   function foldGroup(f, id) {
@@ -38,7 +39,10 @@ export default function Main(props) {
       case "module-wares":
         return (
           <ModuleContainer name="Asortyment" icon="luggage-cart">
-            <Products setActiveTools={setActiveTools} />
+            <Products
+              setActiveTools={setActiveTools}
+              filterState={filterState}
+            />
           </ModuleContainer>
         );
       case "module-ordersSales":
@@ -78,7 +82,12 @@ export default function Main(props) {
         icon="tools"
         visible={props.navToolsVisible}
       >
-        <NavTools activeTools={activeTools} handleClick={handleClick} />
+        <NavTools
+          activeModule={activeModule}
+          activeTools={activeTools}
+          setFilterState={setFilterState}
+          handleClick={handleClick}
+        />
       </NavContainer>
       {renderModule(activeModule)}
     </main>
