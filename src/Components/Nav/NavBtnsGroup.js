@@ -2,21 +2,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavBtnsContainer from "./NavBtnsContainer";
 import { useState, useEffect } from "react";
 
+import fixFAonClick from "../../fixFAonClick";
+
 export default function NavBtnsGroup(props) {
-  const [folded, setFolded] = useState(true);
+  const [folded, setFolded] = useState(props.startFolded);
 
   function handleClick(e) {
-    let ev = {};
-    if (e.target.nodeName === "path") {
-      // there are font awesome icons inside button and they causing nested e.target when clicked on icon or its area
-      ev = { target: e.target.parentNode.parentNode };
-    } else {
-      ev = e;
-    }
+    e = fixFAonClick(e);
 
     if (folded) {
       unfoldCurrentGroupFoldRest();
-      setButtonGroupsHeight(ev);
+      setButtonGroupsHeight(e);
     }
   }
 

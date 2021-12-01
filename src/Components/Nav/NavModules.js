@@ -3,66 +3,121 @@ import NavBtnsGroup from "./NavBtnsGroup";
 import NavBtnsContainer from "./NavBtnsContainer";
 
 export default function NavModules(props) {
-  let modules = [];
+  const modules = [
+    {
+      id: "warehouse",
+      name: "Magazyn",
+      group: [
+        {
+          id: "module-wares",
+          name: "Asortyment",
+          icon: ["fab", "algolia"],
+        },
+        {
+          id: "module-weresIn",
+          name: "Dostawy",
+          icon: ["fab", "algolia"],
+        },
+        {
+          id: "module-weresOut",
+          name: "Wydania",
+          icon: ["fab", "algolia"],
+        },
+        {
+          id: "module-stocktaking",
+          name: "Inwentaryzacja",
+          icon: ["fab", "algolia"],
+        },
+        {
+          id: "module-recepies",
+          name: "Receptury",
+          icon: ["fab", "algolia"],
+        },
+      ],
+      startFolded: false,
+    },
+    {
+      id: "orders",
+      name: "Zamówienia",
+      group: [
+        {
+          id: "module-ordersSales",
+          name: "Zam. sprzedaży",
+          icon: ["fab", "algolia"],
+        },
+        {
+          id: "module-ordersPurchase",
+          name: "Zam. zakupu",
+          icon: ["fab", "algolia"],
+        },
+      ],
+      startFolded: true,
+    },
+    {
+      id: "raports",
+      name: "Raporty",
+      group: [
+        {
+          id: "module-raport1",
+          name: "Raport1",
+          icon: ["fab", "algolia"],
+        },
+      ],
+      startFolded: true,
+    },
+    {
+      id: "module-contractors",
+      name: "Kontrahenci",
+      icon: ["fab", "algolia"],
+    },
+  ];
 
-  for (let i = 0; i < 10; i++) {
-    modules.push({ id: i + 1, name: `MODUŁ ${i + 1}` });
+  function renderModulesNav(modules) {
+    return modules.map((module) => {
+      let modulesToRender = [];
+      if (module.group) {
+        modulesToRender.push(
+          <NavBtnsGroup
+            startFolded={module.startFolded}
+            foldGroup={props.foldGroup}
+            foldGroups={props.foldGroups}
+            name={module.name}
+            id={module.id}
+            key={module.id}
+          >
+            {module.group.map((groupItem) => {
+              return (
+                <NavBtn
+                  key={groupItem.id}
+                  name={groupItem.name}
+                  icon={groupItem.icon}
+                  id={groupItem.id}
+                  grouped={true}
+                  handleClick={props.handleClick}
+                />
+              );
+            })}
+          </NavBtnsGroup>
+        );
+      } else {
+        modulesToRender.push(
+          <NavBtn
+            key={module.id}
+            name={module.name}
+            icon={module.icon}
+            id={module.id}
+            handleClick={props.handleClick}
+          />
+        );
+      }
+      return modulesToRender;
+    });
   }
 
   return (
     <>
       <NavBtnsContainer overflow={true}>
-        <NavBtnsGroup
-          foldGroup={props.foldGroup}
-          foldGroups={props.foldGroups}
-          name="GRUPA 1"
-          id="buttons-group-1"
-        >
-          {modules.slice(0, 6).map((module) => {
-            return (
-              <NavBtn
-                key={module.id}
-                name={module.name}
-                icon={["fab", "algolia"]}
-                id={`nav-btn-module${module.id}`}
-                grouped={true}
-                handleClick={props.handleClick}
-              />
-            );
-          })}
-        </NavBtnsGroup>
-
-        {modules.slice(6, 8).map((module) => {
-          return (
-            <NavBtn
-              key={module.id}
-              name={module.name}
-              icon={["fab", "algolia"]}
-              id={`nav-btn-module${module.id}`}
-              handleClick={props.handleClick}
-            />
-          );
-        })}
-
-        <NavBtnsGroup
-          foldGroup={props.foldGroup}
-          foldGroups={props.foldGroups}
-          name="GRUPA 2"
-          id="buttons-group-2"
-        >
-          {modules.slice(8, 10).map((module) => {
-            return (
-              <NavBtn
-                key={module.id}
-                name={module.name}
-                icon={["fab", "algolia"]}
-                id={`nav-btn-module${module.id}`}
-                grouped={true}
-                handleClick={props.handleClick}
-              />
-            );
-          })}
-        </NavBtnsGroup>
+        {renderModulesNav(modules)}
       </NavBtnsContainer>
     </>
   );

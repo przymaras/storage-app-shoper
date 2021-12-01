@@ -1,10 +1,18 @@
-import Nav from "./Nav/Nav";
+import NavContainer from "./Nav/NavContainer";
 import NavModules from "./Nav/NavModules";
 import NavTools from "./Nav/NavTools";
-import Module from "./Modules/Module";
+import ModuleContainer from "./Modules/ModuleContainer";
 import Products from "./Modules/Products";
+import OrdersSales from "./Modules/OrdersSales";
+
+import { useState } from "react";
+
+import fixFAonClick from "../fixFAonClick";
 
 export default function Main(props) {
+  const [activeModule, setActiveModule] = useState("module-wares");
+  const [activeTools, setActiveTools] = useState([]);
+  const [filterState, setFilterState] = useState([]);
   const foldGroups = [];
 
   function foldGroup(f, id) {
@@ -12,20 +20,51 @@ export default function Main(props) {
   }
 
   function handleClick(e) {
+    e = fixFAonClick(e);
     console.log(`clicked ${e.target.id}`);
-    // console.log(e);
-    // console.log(e.target.parentNode.parentNode.id);
-    foldGroups.forEach((foldGroup) => {
-      //if click comes from active group that is unfolded - don't fold it
-      if (e.target.parentNode.parentNode.id !== foldGroup.id) {
-        foldGroup.f();
-      }
-    });
+
+    if (e.target.id.includes("module-")) {
+      setActiveModule(e.target.id);
+      foldGroups.forEach((foldGroup) => {
+        //if click comes from active group that is unfolded - don't fold it
+        if (e.target.parentNode.parentNode.id !== foldGroup.id) {
+          foldGroup.f();
+        }
+      });
+    }
+  }
+
+  function renderModule(module) {
+    switch (module) {
+      case "module-wares":
+        return (
+          <ModuleContainer name="Asortyment" icon="luggage-cart">
+            <Products
+              setActiveTools={setActiveTools}
+              filterState={filterState}
+            />
+          </ModuleContainer>
+        );
+      case "module-ordersSales":
+        return (
+          <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
+            <OrdersSales setActiveTools={setActiveTools} />
+          </ModuleContainer>
+        );
+
+      default:
+        if (activeTools[0]) setActiveTools([]);
+        return (
+          <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
+            Moduł nie został jeszcze zaimplementowany ... sorry ;)
+          </ModuleContainer>
+        );
+    }
   }
 
   return (
     <main className="main">
-      <Nav
+      <NavContainer
         id="nav-modules"
         title="MODUŁY"
         icon="toolbox"
@@ -36,23 +75,21 @@ export default function Main(props) {
           foldGroups={foldGroups}
           handleClick={handleClick}
         />
-      </Nav>
-      <Nav
+      </NavContainer>
+      <NavContainer
         id="nav-tools"
         title="NARZĘDZIA"
         icon="tools"
         visible={props.navToolsVisible}
       >
-        <NavTools handleClick={handleClick} />
-      </Nav>
-      <Module
-        name="Produkty"
-        icon="luggage-cart"
-        searchBar={true}
-        searchBarPlaceholder="Kod lub nazwa towaru ..."
-      >
-        <Products />
-      </Module>
+        <NavTools
+          activeModule={activeModule}
+          activeTools={activeTools}
+          setFilterState={setFilterState}
+          handleClick={handleClick}
+        />
+      </NavContainer>
+      {renderModule(activeModule)}
     </main>
   );
 }

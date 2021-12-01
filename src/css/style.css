@@ -341,9 +341,8 @@ header {
   background: var(--primary-color);
   width: 100%;
   font-size: 1.6rem;
-  overflow-y: auto;
-
-  height: 100px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  display: flex;
+  flex-direction: column;
   flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
 }
 
@@ -369,14 +368,15 @@ header {
   align-self: center;
 }
 
+.rows-container {
+  width: 100%;
+  overflow-y: auto;
+  height: 100px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
+}
+
 .module--row {
   display: grid;
-  grid-template: repeat(4, auto) / 40px 1fr 1fr 0.5fr 0.5fr 0.5fr 0.5fr 1fr 1fr;
-  grid-template-areas:
-    "cbox name name name name name name name name"
-    "cbox aaaa bbbb cccc cccc dddd dddd eeee ffff"
-    "cbox gggg hhhh hhhh hhhh hhhh iiii iiii iiii"
-    "jjjj jjjj kkkk kkkk llll llll llll llll llll";
   max-width: 100%;
   padding: 0.1em 0.2em;
   background: var(--primary-color);
@@ -420,63 +420,6 @@ header {
   background: var(--primary-color-light);
 }
 
-.module--row .cell:nth-child(1) {
-  grid-area: cbox;
-}
-
-.module--row .cell:nth-child(2) {
-  grid-area: name;
-  justify-content: start;
-}
-
-.module--row .cell:nth-child(3) {
-  grid-area: aaaa;
-}
-
-.module--row .cell:nth-child(4) {
-  grid-area: bbbb;
-}
-
-.module--row .cell:nth-child(5) {
-  grid-area: cccc;
-}
-
-.module--row .cell:nth-child(6) {
-  grid-area: dddd;
-}
-
-.module--row .cell:nth-child(7) {
-  grid-area: eeee;
-}
-
-.module--row .cell:nth-child(8) {
-  grid-area: ffff;
-}
-
-.module--row .cell:nth-child(9) {
-  grid-area: gggg;
-}
-
-.module--row .cell:nth-child(10) {
-  grid-area: hhhh;
-}
-
-.module--row .cell:nth-child(11) {
-  grid-area: iiii;
-}
-
-.module--row .cell:nth-child(12) {
-  grid-area: jjjj;
-}
-
-.module--row .cell:nth-child(13) {
-  grid-area: kkkk;
-}
-
-.module--row .cell:nth-child(14) {
-  grid-area: llll;
-}
-
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
@@ -498,14 +441,6 @@ header {
 
 @media (min-width: 650px) {
   /* module module module module module */
-
-  .module--row {
-    grid-template: repeat(2, auto) / 40px repeat(5, 0.33fr) 1fr 1fr 0.5fr 0.5fr;
-    grid-template-areas: unset;
-    grid-template-areas:
-      "cbox gggg name name name name name name jjjj kkkk"
-      "aaaa bbbb cccc dddd eeee ffff hhhh iiii llll llll";
-  }
 
   .module--row input[type="checkbox"] {
     transform: scale(1.2);
@@ -652,13 +587,5 @@ header {
 @media (min-width: 1800px) {
   .container {
     max-width: var(--main-container-max-width-super-wide);
-  }
-
-  .module--row {
-    grid-template:
-      repeat(1, auto) / 40px 0.5fr 4fr repeat(2, 1fr) repeat(6, 0.6fr)
-      repeat(3, 1.5fr);
-    grid-template-areas: unset;
-    grid-template-areas: "cbox gggg name jjjj kkkk aaaa bbbb cccc dddd eeee ffff hhhh iiii llll";
   }
 }

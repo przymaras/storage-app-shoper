@@ -4,7 +4,7 @@ export default function Cell(props) {
       <input type="checkbox" name={props.name} id={props.id} />
     </div>
   ) : (
-    <div className="cell" id={props.id}>
+    <div onClick={props.handleClick} className="cell" id={props.id}>
       {props.children}
     </div>
   );
