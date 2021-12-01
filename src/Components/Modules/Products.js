@@ -7,7 +7,8 @@ import SearchBar from "./SearchBar";
 export default function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]);
+  const [productsToDisplay, setProductsToDisplay] = useState([]);
   const setActiveTools = props.setActiveTools;
 
   const tools = [
@@ -79,7 +80,8 @@ export default function Products(props) {
           };
         });
         setDataAvailable(true);
-        setProducts(prods);
+        setAllProducts(prods);
+        setProductsToDisplay(prods);
       })
       .catch((e) => {
         setInfo("Nie mogę załadować danych :(");
@@ -89,17 +91,35 @@ export default function Products(props) {
   }, []);
 
   function handleClick(e) {
-    sortProducts(e.target.id);
+    const sortBy = e.target.id;
+    sortProducts(allProducts, setAllProducts, sortBy);
+    sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
     // console.log("click!");
   }
 
   function handleSearchValueChange(value) {
-    if (value !== "") {
-      console.log(`product search: ${value}`);
+    // console.log(`product search: ${value}`);
+    // console.log(allProducts);
+    let newProducts = [...allProducts];
+
+    try {
+      newProducts = newProducts.filter((product) => {
+        const nameIncludesValue = product.name
+          .toUpperCase()
+          .includes(value.toUpperCase());
+
+        const idIncludesValue = product.product_id.toString().includes(value);
+
+        if (nameIncludesValue || idIncludesValue) return true;
+        else return false;
+      });
+      setProductsToDisplay(newProducts);
+    } catch (e) {
+      console.error("Error in search conditions or data structure.");
     }
   }
 
-  function sortProducts(sortBy) {
+  function sortProducts(products, setNewProducts, sortBy) {
     let newProducts = [...products];
     if (typeof newProducts[0][sortBy] === "string") {
       newProducts.sort((a, b) => {
@@ -114,7 +134,7 @@ export default function Products(props) {
       });
     }
 
-    setProducts(newProducts);
+    setNewProducts(newProducts);
   }
 
   function renderRowCells(cells) {
@@ -173,7 +193,7 @@ export default function Products(props) {
 
   function renderProductsRows(p) {
     let rows = [];
-    for (let product of products) {
+    for (let product of p) {
       rows.push(
         <Row key={product.product_id} rowClass="module-wares-row">
           {renderRowCells(product)}
@@ -193,7 +213,7 @@ export default function Products(props) {
         <Row heading={true} rowClass="module-wares-row">
           {renderRowCells(headingCells)}
         </Row>
-        {dataAvailable ? renderProductsRows(products) : info}
+        {dataAvailable ? renderProductsRows(productsToDisplay) : info}
       </div>
     </>
   );
