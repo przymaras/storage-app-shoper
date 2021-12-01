@@ -37,23 +37,13 @@ export default function Main(props) {
     switch (module) {
       case "module-wares":
         return (
-          <ModuleContainer
-            name="Asortyment"
-            icon="luggage-cart"
-            searchBar={true}
-            searchBarPlaceholder="Kod lub nazwa towaru ..."
-          >
+          <ModuleContainer name="Asortyment" icon="luggage-cart">
             <Products setActiveTools={setActiveTools} />
           </ModuleContainer>
         );
       case "module-ordersSales":
         return (
-          <ModuleContainer
-            name="Zamówienia sprzedaży"
-            icon="luggage-cart"
-            searchBar={true}
-            searchBarPlaceholder="Szukana fraza ..."
-          >
+          <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
             <OrdersSales setActiveTools={setActiveTools} />
           </ModuleContainer>
         );
@@ -61,11 +51,7 @@ export default function Main(props) {
       default:
         if (activeTools[0]) setActiveTools([]);
         return (
-          <ModuleContainer
-            name="Moduł nie znaleziony"
-            icon="luggage-cart"
-            searchBar={false}
-          >
+          <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
             Moduł nie został jeszcze zaimplementowany ... sorry ;)
           </ModuleContainer>
         );

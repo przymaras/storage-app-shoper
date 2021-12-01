@@ -341,9 +341,8 @@ header {
   background: var(--primary-color);
   width: 100%;
   font-size: 1.6rem;
-  overflow-y: auto;
-
-  height: 100px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  display: flex;
+  flex-direction: column;
   flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
 }
 
@@ -367,6 +366,13 @@ header {
   width: 100%;
   padding: 0.2em;
   align-self: center;
+}
+
+.rows-container {
+  width: 100%;
+  overflow-y: auto;
+  height: 100px; /* important for overflow scrolling to work with flex! (it works actually as min height) */
+  flex-grow: 1; /* stretch height of item to fill rest of free space  (need flex / column parent) with set height */
 }
 
 .module--row {

@@ -2,6 +2,8 @@ import Row from "./Row";
 import Cell from "./RowCell";
 import { useState, useEffect } from "react";
 
+import SearchBar from "./SearchBar";
+
 export default function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
@@ -93,7 +95,14 @@ export default function OrdersSales(props) {
     return rows;
   }
 
-  return <>{ordersAvailable ? ordersRows(orders) : "Wczytuję zamowienia"}</>;
+  return (
+    <>
+      <SearchBar placeholder="Kod lub nazwa towaru..." />
+      <div className="rows-container">
+        {ordersAvailable ? ordersRows(orders) : "Wczytuję zamowienia"}
+      </div>
+    </>
+  );
 }
 
 // endPointUrl = `order-products?filters={"order_id":"${d.list[0].order_id}"}`;

@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import SearchBar from "./SearchBar";
 
 export default function Module(props) {
   return (
@@ -9,9 +8,6 @@ export default function Module(props) {
         {props.name}
         <FontAwesomeIcon icon={props.icon} />
       </h2>
-      {props.searchBar ? (
-        <SearchBar placeholder={props.searchBarPlaceholder} />
-      ) : null}
       <div className="module--container" id="module-container">
         {props.children}
       </div>

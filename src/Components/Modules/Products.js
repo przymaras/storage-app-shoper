@@ -2,6 +2,8 @@ import Row from "./Row";
 import RowCell from "./RowCell";
 import { useState, useEffect } from "react";
 
+import SearchBar from "./SearchBar";
+
 export default function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
@@ -177,10 +179,13 @@ export default function Products(props) {
 
   return (
     <>
-      <Row heading={true} rowClass="module-wares-row">
-        {renderRowCells(headingCells)}
-      </Row>
-      {dataAvailable ? renderProductsRows(products) : info}
+      <SearchBar placeholder="Kod lub nazwa towaru..." />
+      <div className="rows-container">
+        <Row heading={true} rowClass="module-wares-row">
+          {renderRowCells(headingCells)}
+        </Row>
+        {dataAvailable ? renderProductsRows(products) : info}
+      </div>
     </>
   );
 }
