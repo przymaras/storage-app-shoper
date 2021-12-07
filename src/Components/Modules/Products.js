@@ -10,7 +10,6 @@ function Products(props) {
   const [info, setInfo] = useState("Ładuję dane ...");
   const [allProducts, setAllProducts] = useState([]);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
-  const setActiveTools = props.setActiveTools;
 
   const tools = [
     {
@@ -59,7 +58,7 @@ function Products(props) {
   };
 
   useEffect(() => {
-    setActiveTools(tools);
+    props.setActiveTools(tools);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
