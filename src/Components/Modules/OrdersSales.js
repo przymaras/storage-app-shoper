@@ -1,10 +1,10 @@
 import Row from "./Row";
 import Cell from "./RowCell";
-import { useState, useEffect } from "react";
+import { useState, useEffect, memo } from "react";
 
 import SearchBar from "./SearchBar";
 
-export default function OrdersSales(props) {
+function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
 
@@ -112,6 +112,8 @@ export default function OrdersSales(props) {
     </>
   );
 }
+
+export default memo(OrdersSales);
 
 // endPointUrl = `order-products?filters={"order_id":"${d.list[0].order_id}"}`;
 //         url = `${apiUrl}${endPointUrl}`;
