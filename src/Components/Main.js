@@ -13,12 +13,14 @@ export default function Main(props) {
   const [filterState, setFilterState] = useState([]);
   const foldGroups = [];
 
-  function foldGroup(f, id) {
-    foldGroups.push({ f, id });
+  function addToFoldGroups(f, id) {
+    let canAdd = true;
+    foldGroups.forEach((group) => group.id === id && (canAdd = false));
+
+    if (canAdd) foldGroups.push({ f, id });
   }
 
   function navBtnAction(id, groupId) {
-    console.log(`clicked ${id}`);
     if (id.includes("module-")) {
       setActiveModule(id);
       foldGroups.forEach((foldGroup) => {
@@ -67,7 +69,7 @@ export default function Main(props) {
         visible={props.navModulesVisible}
       >
         <NavModules
-          foldGroup={foldGroup}
+          addToFoldGroups={addToFoldGroups}
           foldGroups={foldGroups}
           navBtnAction={navBtnAction}
         />

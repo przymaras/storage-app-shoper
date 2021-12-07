@@ -8,22 +8,23 @@ function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
 
-  const tools = [
-    {
-      id: "tool-ordersSales1",
-      name: "NARZĘDZIE 1",
-      icon: ["fab", "algolia"],
-    },
-    {
-      id: "tool-ordersSales2",
-      name: "NARZĘDZIE 2",
-      icon: ["fab", "algolia"],
-    },
-  ];
+  const setActiveTools = props.setActiveTools;
+
   useEffect(() => {
-    props.setActiveTools(tools);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const tools = [
+      {
+        id: "tool-ordersSales1",
+        name: "NARZĘDZIE 1",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-ordersSales2",
+        name: "NARZĘDZIE 2",
+        icon: ["fab", "algolia"],
+      },
+    ];
+    setActiveTools(tools);
+  }, [setActiveTools]);
 
   useEffect(() => {
     const apiUrl = `http://localhost:3030/api?endPoint=`;
@@ -40,14 +41,14 @@ function OrdersSales(props) {
         setOrders(d.list);
         setOrdersAvailable(true);
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleSearchValueChange(value) {
+  const handleSearchValueChange = (value) => {
+    //use useCallback here when needed
     if (value !== "") {
       console.log(`orders search: ${value}`);
     }
-  }
+  };
 
   function orderRowCells(o) {
     const cellsArray = [];
@@ -104,7 +105,7 @@ function OrdersSales(props) {
     <>
       <SearchBar
         placeholder="Kod lub nazwa towaru..."
-        externalHandleSearchValueChange={handleSearchValueChange}
+        parentHandleChange={handleSearchValueChange}
       />
       <div className="rows-container">
         {ordersAvailable ? ordersRows(orders) : "Wczytuję zamowienia"}

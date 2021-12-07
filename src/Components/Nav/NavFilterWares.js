@@ -1,17 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
 export default function NavFilter(props) {
   const [visible, setVisible] = useState(false);
 
-  const defaultFilterState = {
+  const setMainFilterState = props.setFilterState;
+
+  const defaultFilterState = useRef({
     showArchive: false,
     type: "wszystkie",
     mag_group: "wszystkie",
     supplier: "wszystkie",
-  };
+  });
 
-  const [filterState, setFilterState] = useState(defaultFilterState);
+  const [filterState, setFilterState] = useState({
+    ...defaultFilterState.current,
+  });
 
   function handleClick(e) {
     setVisible(!visible);
@@ -27,19 +31,16 @@ export default function NavFilter(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log("Filter Submit");
-    console.log(filterState);
     props.setFilterState(filterState);
   }
 
   function handleReset(e) {
-    setFilterState(defaultFilterState);
+    setFilterState(defaultFilterState.current);
   }
 
   useEffect(() => {
-    props.setFilterState(filterState);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setMainFilterState(defaultFilterState.current);
+  }, [setMainFilterState, defaultFilterState]);
 
   return (
     <div className="nav-filter-container">

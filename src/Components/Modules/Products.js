@@ -1,6 +1,6 @@
 import Row from "./Row";
 import RowCell from "./RowCell";
-import { useState, useEffect, memo, useRef } from "react";
+import { useState, useEffect, memo, useRef, useCallback } from "react";
 
 import SearchBar from "./SearchBar";
 
@@ -11,18 +11,7 @@ function Products(props) {
   // const [allProducts, setAllProducts] = useState([]);
   const allProducts = useRef([]);
 
-  const tools = [
-    {
-      id: "tool-wares1",
-      name: "NARZĘDZIE 1",
-      icon: ["fab", "algolia"],
-    },
-    {
-      id: "tool-wares2",
-      name: "NARZĘDZIE 2",
-      icon: ["fab", "algolia"],
-    },
-  ];
+  const setActiveTools = props.setActiveTools;
 
   const orderOfCells = [
     { id: "name" },
@@ -58,9 +47,21 @@ function Products(props) {
   };
 
   useEffect(() => {
-    props.setActiveTools(tools);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const tools = [
+      {
+        id: "tool-wares1",
+        name: "NARZĘDZIE 1",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares2",
+        name: "NARZĘDZIE 2",
+        icon: ["fab", "algolia"],
+      },
+    ];
+
+    setActiveTools(tools);
+  }, [setActiveTools]);
 
   useEffect(() => {
     async function getData(url) {
@@ -92,7 +93,6 @@ function Products(props) {
           console.log("Can't load data...");
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.filterState.mag_group,
     props.filterState.supplier,
@@ -106,30 +106,30 @@ function Products(props) {
       sortProducts(allProducts.current, setAllProducts, sortBy);
       sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
     }
-    console.log(props.filterState);
   }
 
-  function handleSearchValueChange(value) {
-    // console.log(`product search: ${value}`);
-    // console.log(allProducts);
-    let newProducts = [...allProducts.current];
+  const handleSearchValueChange = useCallback(
+    (value) => {
+      let newProducts = [...allProducts.current];
 
-    try {
-      newProducts = newProducts.filter((product) => {
-        const nameIncludesValue = product.name
-          .toUpperCase()
-          .includes(value.toUpperCase());
+      try {
+        newProducts = newProducts.filter((product) => {
+          const nameIncludesValue = product.name
+            .toUpperCase()
+            .includes(value.toUpperCase());
 
-        const idIncludesValue = product.product_id.toString().includes(value);
+          const idIncludesValue = product.product_id.toString().includes(value);
 
-        if (nameIncludesValue || idIncludesValue) return true;
-        else return false;
-      });
-      setProductsToDisplay(newProducts);
-    } catch (e) {
-      console.error("Error in search conditions or data structure.");
-    }
-  }
+          if (nameIncludesValue || idIncludesValue) return true;
+          else return false;
+        });
+        setProductsToDisplay(newProducts);
+      } catch (e) {
+        console.error("Error in search conditions or data structure.");
+      }
+    },
+    [allProducts]
+  );
 
   function setAllProducts(prod) {
     allProducts.current = [...prod];
@@ -223,7 +223,7 @@ function Products(props) {
     <>
       <SearchBar
         placeholder="Kod lub nazwa towaru..."
-        externalHandleSearchValueChange={handleSearchValueChange}
+        parentHandleChange={handleSearchValueChange}
       />
       <div className="rows-container">
         <Row heading={true} rowClass="module-wares-row">

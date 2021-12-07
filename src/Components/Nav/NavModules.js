@@ -79,7 +79,7 @@ export default function NavModules(props) {
         modulesToRender.push(
           <NavBtnsGroup
             startFolded={module.startFolded}
-            foldGroup={props.foldGroup}
+            addToFoldGroups={props.addToFoldGroups}
             foldGroups={props.foldGroups}
             name={module.name}
             id={module.id}
