@@ -1,15 +1,15 @@
 import Row from "./Row";
 import RowCell from "./RowCell";
-import { useState, useEffect } from "react";
-import { memo } from "react";
+import { useState, useEffect, memo, useRef } from "react";
 
 import SearchBar from "./SearchBar";
 
 function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
-  const [allProducts, setAllProducts] = useState([]);
   const [productsToDisplay, setProductsToDisplay] = useState([]);
+  // const [allProducts, setAllProducts] = useState([]);
+  const allProducts = useRef([]);
 
   const tools = [
     {
@@ -82,7 +82,8 @@ function Products(props) {
             };
           });
           setDataAvailable(true);
-          setAllProducts(prods);
+          // setAllProducts(prods);
+          allProducts.current = [...prods];
           setProductsToDisplay(prods);
         })
         .catch((e) => {
@@ -102,7 +103,7 @@ function Products(props) {
   function sortByColumn(e) {
     const sortBy = e.target.id;
     if (dataAvailable) {
-      sortProducts(allProducts, setAllProducts, sortBy);
+      sortProducts(allProducts.current, setAllProducts, sortBy);
       sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
     }
     console.log(props.filterState);
@@ -111,7 +112,7 @@ function Products(props) {
   function handleSearchValueChange(value) {
     // console.log(`product search: ${value}`);
     // console.log(allProducts);
-    let newProducts = [...allProducts];
+    let newProducts = [...allProducts.current];
 
     try {
       newProducts = newProducts.filter((product) => {
@@ -128,6 +129,10 @@ function Products(props) {
     } catch (e) {
       console.error("Error in search conditions or data structure.");
     }
+  }
+
+  function setAllProducts(prod) {
+    allProducts.current = [...prod];
   }
 
   function sortProducts(products, setNewProducts, sortBy) {
