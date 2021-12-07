@@ -90,7 +90,7 @@ function Products(props) {
         .catch((e) => {
           setDataAvailable(false);
           setInfo("Nie mogę załadować danych :(");
-          console.log("Can't load data...");
+          console.error("Can't load data...");
         });
     }
   }, [
