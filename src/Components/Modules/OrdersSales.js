@@ -7,7 +7,6 @@ import SearchBar from "./SearchBar";
 export default function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
-  const setActiveTools = props.setActiveTools;
 
   const tools = [
     {
@@ -22,7 +21,7 @@ export default function OrdersSales(props) {
     },
   ];
   useEffect(() => {
-    setActiveTools(tools);
+    props.setActiveTools(tools);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

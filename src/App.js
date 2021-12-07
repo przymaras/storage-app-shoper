@@ -7,20 +7,15 @@ import Main from "./Components/Main";
 import { useState } from "react";
 import React from "react";
 
-import fixFAonClick from "./fixFAonClick";
+// import fixFAonClick from "./fixFAonClick";
 
 function App() {
   const [navModulesVisible, setNavModulesVisible] = useState(false);
   const [navToolsVisible, setNavToolsVisible] = useState(false);
 
-  function handleClick(e) {
-    e = fixFAonClick(e);
-
-    toggleNav(e);
-  }
-
-  function toggleNav(e) {
-    if (e.target.id === "nav-modules-open-btn") {
+  function toggleNav(id) {
+    // if (e.target.id === "nav-modules-open-btn") {
+    if (id === "nav-modules-open-btn") {
       setNavModulesVisible(!navModulesVisible);
       setNavToolsVisible(false);
     } else {
@@ -31,7 +26,7 @@ function App() {
 
   return (
     <>
-      <Header handleClick={handleClick} />
+      <Header toggleNav={toggleNav} />
       <Main
         navModulesVisible={navModulesVisible}
         navToolsVisible={navToolsVisible}

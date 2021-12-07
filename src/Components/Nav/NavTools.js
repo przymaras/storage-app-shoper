@@ -3,11 +3,9 @@ import NavBtnsContainer from "./NavBtnsContainer";
 import NavFilterWares from "./NavFilterWares";
 
 export default function NavTools(props) {
-  const tools = props.activeTools;
-  const activeModule = props.activeModule;
   let filter;
 
-  switch (activeModule) {
+  switch (props.activeModule) {
     case "module-wares":
       filter = <NavFilterWares setFilterState={props.setFilterState} />;
       break;
@@ -20,14 +18,14 @@ export default function NavTools(props) {
   return (
     <>
       <NavBtnsContainer overflow={true}>
-        {tools.map((tool) => {
+        {props.activeTools.map((tool) => {
           return (
             <NavBtn
               key={tool.id}
               name={tool.name}
               icon={tool.icon}
               id={tool.id}
-              handleClick={props.handleClick}
+              navBtnAction={props.navBtnAction}
             />
           );
         })}

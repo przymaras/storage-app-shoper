@@ -1,10 +1,11 @@
 import Row from "./Row";
 import RowCell from "./RowCell";
 import { useState, useEffect } from "react";
+import { memo } from "react";
 
 import SearchBar from "./SearchBar";
 
-export default function Products(props) {
+function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
   const [allProducts, setAllProducts] = useState([]);
@@ -227,3 +228,5 @@ export default function Products(props) {
     </>
   );
 }
+
+export default memo(Products);

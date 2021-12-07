@@ -1,11 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function NavBtn(props) {
-  const handleClick = props.handleClick;
-
   return (
     <button
-      onClick={handleClick}
+      onClick={(e) => props.navBtnAction(props.id, props.groupId)}
       className={`nav-btn ${props.grouped ? "grouped" : null} btn`}
       id={props.id}
     >
@@ -14,3 +12,5 @@ export default function NavBtn(props) {
     </button>
   );
 }
+
+NavBtn.defaultProps = { grouped: false, groupId: "not-in-group" };

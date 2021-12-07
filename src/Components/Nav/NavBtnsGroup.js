@@ -35,9 +35,7 @@ export default function NavBtnsGroup(props) {
   function unfoldCurrentGroupFoldRest() {
     setFolded(false);
 
-    const foldGroups = props.foldGroups;
-
-    foldGroups.forEach((foldGr) => {
+    props.foldGroups.forEach((foldGr) => {
       // close all groups but not current group
       if (foldGr.id !== props.id) {
         foldGr.f();
@@ -51,11 +49,9 @@ export default function NavBtnsGroup(props) {
 
   useEffect(() => {
     //pass fold function of each group to array in Main.js
-    const foldGroup = props.foldGroup;
-    foldGroup(fold, props.id);
+    props.foldGroup(fold, props.id);
 
-    // can use folowing as comment (without quotes) to avoid error when using []
-    // "eslint-disable-next-line react-hooks/exhaustive-deps"
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.foldGroup, props.id]);
 
   return (

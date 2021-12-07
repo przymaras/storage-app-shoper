@@ -93,7 +93,8 @@ export default function NavModules(props) {
                   icon={groupItem.icon}
                   id={groupItem.id}
                   grouped={true}
-                  handleClick={props.handleClick}
+                  groupId={module.id}
+                  navBtnAction={props.navBtnAction}
                 />
               );
             })}
@@ -106,7 +107,7 @@ export default function NavModules(props) {
             name={module.name}
             icon={module.icon}
             id={module.id}
-            handleClick={props.handleClick}
+            navBtnAction={props.navBtnAction}
           />
         );
       }

@@ -7,8 +7,6 @@ import OrdersSales from "./Modules/OrdersSales";
 
 import { useState } from "react";
 
-import fixFAonClick from "../fixFAonClick";
-
 export default function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
   const [activeTools, setActiveTools] = useState([]);
@@ -19,15 +17,13 @@ export default function Main(props) {
     foldGroups.push({ f, id });
   }
 
-  function handleClick(e) {
-    e = fixFAonClick(e);
-    console.log(`clicked ${e.target.id}`);
-
-    if (e.target.id.includes("module-")) {
-      setActiveModule(e.target.id);
+  function navBtnAction(id, groupId) {
+    console.log(`clicked ${id}`);
+    if (id.includes("module-")) {
+      setActiveModule(id);
       foldGroups.forEach((foldGroup) => {
-        //if click comes from active group that is unfolded - don't fold it
-        if (e.target.parentNode.parentNode.id !== foldGroup.id) {
+        //fold all btn groups but if click comes from active group that is unfolded - don't fold it
+        if (groupId !== foldGroup.id) {
           foldGroup.f();
         }
       });
@@ -73,7 +69,7 @@ export default function Main(props) {
         <NavModules
           foldGroup={foldGroup}
           foldGroups={foldGroups}
-          handleClick={handleClick}
+          navBtnAction={navBtnAction}
         />
       </NavContainer>
       <NavContainer
@@ -86,7 +82,7 @@ export default function Main(props) {
           activeModule={activeModule}
           activeTools={activeTools}
           setFilterState={setFilterState}
-          handleClick={handleClick}
+          navBtnAction={navBtnAction}
         />
       </NavContainer>
       {renderModule(activeModule)}
