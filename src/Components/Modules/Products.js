@@ -68,7 +68,6 @@ function Products(props) {
       const data = await res.json();
       return data;
     }
-
     if (props.filterState.mag_group) {
       const url = `http://localhost:3030/products?mag_group=${props.filterState.mag_group}&supplier=${props.filterState.supplier}&type=${props.filterState.type}&showArchive=${props.filterState.showArchive}`;
       getData(url)
@@ -87,6 +86,7 @@ function Products(props) {
           setProductsToDisplay(prods);
         })
         .catch((e) => {
+          setDataAvailable(false);
           setInfo("Nie mogę załadować danych :(");
           console.log("Can't load data...");
         });
@@ -99,10 +99,12 @@ function Products(props) {
     props.filterState.showArchive,
   ]);
 
-  function handleClick(e) {
+  function sortByColumn(e) {
     const sortBy = e.target.id;
-    sortProducts(allProducts, setAllProducts, sortBy);
-    sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
+    if (dataAvailable) {
+      sortProducts(allProducts, setAllProducts, sortBy);
+      sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
+    }
     console.log(props.filterState);
   }
 
@@ -177,7 +179,7 @@ function Products(props) {
     sortedCells = sortedCells.map((cell) => {
       return (
         <RowCell
-          handleClick={cells.heading ? handleClick : null}
+          handleClick={cells.heading ? sortByColumn : null}
           key={`${cells.product_id}_${cell.id}`}
           name={cell.id}
           id={cell.id}
