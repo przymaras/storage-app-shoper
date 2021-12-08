@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
+import { useToggler } from "../../Hooks/useToggler";
 
 export default function NavFilter(props) {
-  const [visible, setVisible] = useState(false);
+  const [visible, toggleVisible] = useToggler(false);
 
   const setMainFilterState = props.setFilterState;
 
@@ -16,10 +17,6 @@ export default function NavFilter(props) {
   const [filterState, setFilterState] = useState({
     ...defaultFilterState.current,
   });
-
-  function handleClick(e) {
-    setVisible(!visible);
-  }
 
   function handleChange(e) {
     const target = e.target;
@@ -106,7 +103,7 @@ export default function NavFilter(props) {
             <FontAwesomeIcon icon="window-close" />
           </button>
           <button
-            onClick={handleClick}
+            onClick={toggleVisible}
             type="button"
             className="filter-options-toggle-btn btn"
             id="filter-options-toggle-btn"

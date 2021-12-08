@@ -47,7 +47,7 @@ export default function NavBtnsGroup(props) {
     setFolded(true);
   }
 
-  //This not ideal but works... it allows to fold all groups by another one group. It runs every render but it goes fast...
+  //This not ideal but works... it allows to fold all groups by one sibling group. It runs every render but it is low time consuming...
   props.addToFoldGroups(foldThisGroup, props.id);
 
   return (
