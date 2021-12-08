@@ -14,6 +14,7 @@ function Products(props) {
   const allProducts = useRef([]);
 
   const setActiveTools = props.setActiveTools;
+  const setSelectedItems = props.setSelectedItems;
 
   const orderOfCells = [
     { id: "name" },
@@ -121,8 +122,9 @@ function Products(props) {
       } catch (e) {
         console.error("Error in search conditions or data structure.");
       }
+      setSelectedItems([]);
     },
-    [allProducts]
+    [allProducts, setSelectedItems]
   );
 
   function localSelectedItemsChange(id) {
@@ -132,7 +134,7 @@ function Products(props) {
       productsToDisplay,
       "product_id",
       props.selectedItems,
-      props.setSelectedItems
+      setSelectedItems
     );
   }
 

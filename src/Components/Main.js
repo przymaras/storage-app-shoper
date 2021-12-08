@@ -5,7 +5,7 @@ import ModuleContainer from "./Modules/ModuleContainer";
 import Products from "./Modules/Products";
 import OrdersSales from "./Modules/OrdersSales";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
@@ -20,6 +20,10 @@ export default function Main(props) {
 
     if (canAdd) foldGroups.push({ f, id });
   }
+
+  useEffect(() => {
+    setSelectedItems([]);
+  }, [filterState]);
 
   function navBtnAction(id, groupId) {
     if (id.includes("module-")) {
