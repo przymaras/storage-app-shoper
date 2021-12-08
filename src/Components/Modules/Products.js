@@ -4,6 +4,8 @@ import { useState, useEffect, memo, useRef, useCallback } from "react";
 
 import SearchBar from "./SearchBar";
 
+import { commonSelectedItemsChange } from "./common";
+
 function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
@@ -100,14 +102,6 @@ function Products(props) {
     props.filterState.showArchive,
   ]);
 
-  function sortByColumn(e) {
-    const sortBy = e.target.id;
-    if (dataAvailable) {
-      sortProducts(allProducts.current, setAllProducts, sortBy);
-      sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
-    }
-  }
-
   const handleSearchValueChange = useCallback(
     (value) => {
       let newProducts = [...allProducts.current];
@@ -130,6 +124,25 @@ function Products(props) {
     },
     [allProducts]
   );
+
+  function localSelectedItemsChange(id) {
+    commonSelectedItemsChange(
+      id,
+      headingCells.product_id,
+      productsToDisplay,
+      "product_id",
+      props.selectedItems,
+      props.setSelectedItems
+    );
+  }
+
+  function sortByColumn(e) {
+    const sortBy = e.target.id;
+    if (dataAvailable) {
+      sortProducts(allProducts.current, setAllProducts, sortBy);
+      sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
+    }
+  }
 
   function setAllProducts(prod) {
     allProducts.current = [...prod];
@@ -197,10 +210,12 @@ function Products(props) {
     //Add checkbox as first cell
     sortedCells.unshift(
       <RowCell
+        handleClick={localSelectedItemsChange}
         key={`${cells.product_id}_cb`}
         type="checkbox"
         name={cells.product_id}
         id={cells.product_id}
+        checked={props.selectedItems.includes(cells.product_id)}
       />
     );
 

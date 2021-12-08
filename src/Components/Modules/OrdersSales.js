@@ -4,6 +4,8 @@ import { useState, useEffect, memo } from "react";
 
 import SearchBar from "./SearchBar";
 
+import { commonSelectedItemsChange } from "./common";
+
 function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);
   const [orders, setOrders] = useState({});
@@ -50,14 +52,26 @@ function OrdersSales(props) {
     }
   };
 
+  function localSelectedItemsChange(id) {
+    commonSelectedItemsChange(
+      id,
+      "to be updated",
+      orders,
+      "order_id",
+      props.selectedItems,
+      props.setSelectedItems
+    );
+  }
+
   function orderRowCells(o) {
     const cellsArray = [];
     cellsArray.push(
       <Cell
         type="checkbox"
         name={`${o.order_id}_cb`}
-        id={`${o.order_id}_cb`}
+        id={`${o.order_id}`}
         key={`${o.order_id}_cb`}
+        handleClick={localSelectedItemsChange}
       />
     );
     cellsArray.push(
