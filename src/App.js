@@ -3,7 +3,7 @@ import "./css/module-wares-row.css";
 import "./css/module-ordersSales-row.css";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
-import { useToggler } from "./Hooks/useToggler";
+import { useToggler } from "./hooks/useToggler";
 
 function App() {
   const [navModulesVisible, toggleNavModules] = useToggler();

@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
-import { useToggler } from "../../Hooks/useToggler";
+import { useToggler } from "../../hooks/useToggler";
 
 export default function NavFilter(props) {
   const [visible, toggleVisible] = useToggler(false);
