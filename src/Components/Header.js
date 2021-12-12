@@ -9,7 +9,7 @@ export default function Header(props) {
       </h1>
       <div className="nav-toggle">
         <button
-          onClick={() => props.toggleNav("nav-modules-open-btn")}
+          onClick={props.toggleNavModules}
           className="nav-toggle--button btn"
           id="nav-modules-open-btn"
         >
@@ -18,7 +18,7 @@ export default function Header(props) {
         </button>
 
         <button
-          onClick={() => props.toggleNav("nav-tools-open-btn")}
+          onClick={props.toggleNavTools}
           className="nav-toggle--button btn"
           id="nav-tools-open-btn"
         >

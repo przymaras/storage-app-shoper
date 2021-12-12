@@ -128,7 +128,6 @@ header {
 }
 
 .hide-overlay {
-  position: fixed;
   transform: translateY(-50%);
   visibility: hidden;
   opacity: 0;

@@ -5,28 +5,40 @@ import ModuleContainer from "./Modules/ModuleContainer";
 import Products from "./Modules/Products";
 import OrdersSales from "./Modules/OrdersSales";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
   const [activeTools, setActiveTools] = useState([]);
   const [filterState, setFilterState] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
   const foldGroups = [];
 
-  function foldGroup(f, id) {
-    foldGroups.push({ f, id });
+  function addToFoldGroups(f, id) {
+    let canAdd = true;
+    foldGroups.forEach((group) => group.id === id && (canAdd = false));
+
+    if (canAdd) foldGroups.push({ f, id });
   }
 
+  useEffect(() => {
+    setSelectedItems([]);
+  }, [filterState]);
+
   function navBtnAction(id, groupId) {
-    console.log(`clicked ${id}`);
     if (id.includes("module-")) {
       setActiveModule(id);
+      setSelectedItems([]);
       foldGroups.forEach((foldGroup) => {
         //fold all btn groups but if click comes from active group that is unfolded - don't fold it
         if (groupId !== foldGroup.id) {
           foldGroup.f();
         }
       });
+    }
+
+    if (id.includes("tool-")) {
+      console.log(selectedItems);
     }
   }
 
@@ -38,13 +50,19 @@ export default function Main(props) {
             <Products
               setActiveTools={setActiveTools}
               filterState={filterState}
+              setSelectedItems={setSelectedItems}
+              selectedItems={selectedItems}
             />
           </ModuleContainer>
         );
       case "module-ordersSales":
         return (
           <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
-            <OrdersSales setActiveTools={setActiveTools} />
+            <OrdersSales
+              setActiveTools={setActiveTools}
+              setSelectedItems={setSelectedItems}
+              selectedItems={selectedItems}
+            />
           </ModuleContainer>
         );
 
@@ -67,7 +85,7 @@ export default function Main(props) {
         visible={props.navModulesVisible}
       >
         <NavModules
-          foldGroup={foldGroup}
+          addToFoldGroups={addToFoldGroups}
           foldGroups={foldGroups}
           navBtnAction={navBtnAction}
         />

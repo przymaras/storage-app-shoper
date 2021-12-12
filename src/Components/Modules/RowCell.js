@@ -1,7 +1,15 @@
-export default function Cell(props) {
+import { memo } from "react/cjs/react.development";
+
+function Cell(props) {
   return props.type === "checkbox" ? (
     <div className="cell">
-      <input type="checkbox" name={props.name} id={props.id} />
+      <input
+        type="checkbox"
+        id={props.id}
+        name={props.name}
+        checked={props.checked}
+        onChange={() => props.handleClick(props.id)}
+      />
     </div>
   ) : (
     <div onClick={props.handleClick} className="cell" id={props.id}>
@@ -9,3 +17,5 @@ export default function Cell(props) {
     </div>
   );
 }
+
+export default memo(Cell);

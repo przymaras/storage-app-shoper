@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export default function Nav(props) {
+export default function NavContainer(props) {
   return (
     <nav
       className={`nav-overlay ${props.visible ? null : "hide-overlay"}`}

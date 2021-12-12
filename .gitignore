@@ -13,6 +13,7 @@
 
 # backup
 /original
+/ideas
 
 # misc
 .DS_Store

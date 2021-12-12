@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavBtnsContainer from "./NavBtnsContainer";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import fixFAonClick from "../../fixFAonClick";
 
@@ -43,16 +43,12 @@ export default function NavBtnsGroup(props) {
     });
   }
 
-  function fold() {
+  function foldThisGroup() {
     setFolded(true);
   }
 
-  useEffect(() => {
-    //pass fold function of each group to array in Main.js
-    props.foldGroup(fold, props.id);
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.foldGroup, props.id]);
+  //This not ideal but works... it allows to fold all groups by one sibling group. It runs every render but it is low time consuming...
+  props.addToFoldGroups(foldThisGroup, props.id);
 
   return (
     <div

@@ -4,14 +4,15 @@ import { useState } from "react/cjs/react.development";
 export default function SearchBar(props) {
   const [searchValue, setSearchValue] = useState("");
 
+  const parentHandleChange = props.parentHandleChange;
+
   function handleChange(e) {
     setSearchValue(e.target.value);
   }
 
   useEffect(() => {
-    props.externalHandleSearchValueChange(searchValue);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchValue]);
+    parentHandleChange(searchValue);
+  }, [searchValue, parentHandleChange]);
 
   return (
     <div className="search-form">
