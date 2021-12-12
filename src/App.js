@@ -3,11 +3,22 @@ import "./css/module-wares-row.css";
 import "./css/module-ordersSales-row.css";
 import Header from "./Components/Header";
 import Main from "./Components/Main";
-import { useToggler } from "./hooks/useToggler";
+import { useState } from "react";
 
 function App() {
-  const [navModulesVisible, toggleNavModules] = useToggler();
-  const [navToolsVisible, toggleNavTools] = useToggler();
+  const [navModulesVisible, setNavModulesVisible] = useState(false);
+  const [navToolsVisible, setNavToolsVisible] = useState(false);
+
+  function toggleNavModules() {
+    setNavModulesVisible((prevState) => !prevState);
+    setNavToolsVisible(false);
+  }
+
+  function toggleNavTools() {
+    setNavToolsVisible((prevState) => !prevState);
+    setNavModulesVisible(false);
+  }
+
 
   return (
     <>
