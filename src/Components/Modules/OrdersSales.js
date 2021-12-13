@@ -27,6 +27,9 @@ function OrdersSales(props) {
       },
     ];
     setActiveTools(tools);
+    return () => {
+      setActiveTools([]);
+    };
   }, [setActiveTools]);
 
   useEffect(() => {

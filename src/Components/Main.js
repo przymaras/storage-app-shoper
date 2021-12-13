@@ -8,12 +8,16 @@ import OrdersSales from "./Modules/OrdersSales";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+
 function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
   const [activeTools, setActiveTools] = useState([]);
   const [filterState, setFilterState] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
   const foldGroups = [];
+
+  let navigate = useNavigate();
 
   function addToFoldGroups(f, id) {
     const thisGroupIsNotInArray = !foldGroups.some((group) => group.id === id);
@@ -26,6 +30,7 @@ function Main(props) {
 
   function navBtnAction(id, groupId) {
     if (id.includes("module-")) {
+      navigate(`${id}`);
       setActiveModule(id);
       setSelectedItems([]);
       foldGroups.forEach((foldGroup) => {
@@ -41,39 +46,39 @@ function Main(props) {
     }
   }
 
-  function renderModule(module) {
-    switch (module) {
-      case "module-wares":
-        return (
-          <ModuleContainer name="Asortyment" icon="luggage-cart">
-            <Products
-              setActiveTools={setActiveTools}
-              filterState={filterState}
-              setSelectedItems={setSelectedItems}
-              selectedItems={selectedItems}
-            />
-          </ModuleContainer>
-        );
-      case "module-ordersSales":
-        return (
-          <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
-            <OrdersSales
-              setActiveTools={setActiveTools}
-              setSelectedItems={setSelectedItems}
-              selectedItems={selectedItems}
-            />
-          </ModuleContainer>
-        );
+  // function renderModule(module) {
+  //   switch (module) {
+  //     case "module-wares":
+  //       return (
+  //         <ModuleContainer name="Asortyment" icon="luggage-cart">
+  //           <Products
+  //             setActiveTools={setActiveTools}
+  //             filterState={filterState}
+  //             setSelectedItems={setSelectedItems}
+  //             selectedItems={selectedItems}
+  //           />
+  //         </ModuleContainer>
+  //       );
+  //     case "module-ordersSales":
+  //       return (
+  //         <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
+  //           <OrdersSales
+  //             setActiveTools={setActiveTools}
+  //             setSelectedItems={setSelectedItems}
+  //             selectedItems={selectedItems}
+  //           />
+  //         </ModuleContainer>
+  //       );
 
-      default:
-        if (activeTools[0]) setActiveTools([]);
-        return (
-          <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
-            Moduł nie został jeszcze zaimplementowany ... sorry ;)
-          </ModuleContainer>
-        );
-    }
-  }
+  //     default:
+  //       if (activeTools[0]) setActiveTools([]);
+  //       return (
+  //         <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
+  //           Moduł nie został jeszcze zaimplementowany ... sorry ;)
+  //         </ModuleContainer>
+  //       );
+  //   }
+  // }
 
   return (
     <main className="main">
@@ -102,7 +107,42 @@ function Main(props) {
           navBtnAction={navBtnAction}
         />
       </NavContainer>
-      {renderModule(activeModule)}
+      <Routes>
+        <Route path="/" element={<Navigate replace to="/module-wares" />} />
+        <Route
+          path="/module-wares"
+          element={
+            <ModuleContainer name="Asortyment" icon="luggage-cart">
+              <Products
+                setActiveTools={setActiveTools}
+                filterState={filterState}
+                setSelectedItems={setSelectedItems}
+                selectedItems={selectedItems}
+              />
+            </ModuleContainer>
+          }
+        />
+        <Route
+          path="/module-ordersSales"
+          element={
+            <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
+              <OrdersSales
+                setActiveTools={setActiveTools}
+                setSelectedItems={setSelectedItems}
+                selectedItems={selectedItems}
+              />
+            </ModuleContainer>
+          }
+        />
+        <Route
+          path="/*"
+          element={
+            <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
+              Moduł nie został jeszcze zaimplementowany ... sorry ;)
+            </ModuleContainer>
+          }
+        />
+      </Routes>
     </main>
   );
 }
