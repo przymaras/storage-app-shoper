@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavBtnsContainer from "./NavBtnsContainer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 import fixFAonClick from "../../fixFAonClick";
@@ -35,7 +35,6 @@ function NavBtnsGroup(props) {
 
   function unfoldCurrentGroupFoldRest() {
     setFolded(false);
-
     props.foldGroups.forEach((foldGr) => {
       // close all groups but not current group
       if (foldGr.id !== props.id) {
@@ -48,8 +47,10 @@ function NavBtnsGroup(props) {
     setFolded(true);
   }
 
-  //This not ideal but works... it allows to fold all groups by one sibling group. It runs every render but it is low time consuming...
-  props.addToFoldGroups(foldThisGroup, props.id);
+  useEffect(() => {
+    //This not ideal but works... it allows to fold all buttons groups by one sibling group.
+    props.addToFoldGroups(foldThisGroup, props.id);
+  }, [props]);
 
   return (
     <div

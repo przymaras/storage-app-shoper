@@ -16,10 +16,8 @@ function Main(props) {
   const foldGroups = [];
 
   function addToFoldGroups(f, id) {
-    let canAdd = true;
-    foldGroups.forEach((group) => group.id === id && (canAdd = false));
-
-    if (canAdd) foldGroups.push({ f, id });
+    const thisGroupIsNotInArray = !foldGroups.some((group) => group.id === id);
+    if (thisGroupIsNotInArray) foldGroups.push({ f, id });
   }
 
   useEffect(() => {
