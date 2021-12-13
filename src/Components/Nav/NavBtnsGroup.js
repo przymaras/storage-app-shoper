@@ -1,10 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import NavBtnsContainer from "./NavBtnsContainer";
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 import fixFAonClick from "../../fixFAonClick";
 
-export default function NavBtnsGroup(props) {
+function NavBtnsGroup(props) {
   const [folded, setFolded] = useState(props.startFolded);
 
   function handleClick(e) {
@@ -65,3 +66,15 @@ export default function NavBtnsGroup(props) {
     </div>
   );
 }
+
+NavBtnsGroup.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  addToFoldGroups: PropTypes.func.isRequired,
+  foldGroups: PropTypes.array.isRequired,
+  startFolded: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
+    .isRequired,
+};
+
+export default NavBtnsGroup;

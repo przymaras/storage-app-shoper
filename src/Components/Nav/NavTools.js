@@ -1,8 +1,9 @@
 import NavBtn from "./NavBtn";
 import NavBtnsContainer from "./NavBtnsContainer";
 import NavFilterWares from "./NavFilterWares";
+import PropTypes from "prop-types";
 
-export default function NavTools(props) {
+function NavTools(props) {
   let filter;
 
   switch (props.activeModule) {
@@ -35,3 +36,11 @@ export default function NavTools(props) {
     </>
   );
 }
+NavTools.propTypes = {
+  activeTools: PropTypes.array.isRequired,
+  navBtnAction: PropTypes.func.isRequired,
+  activeModule: PropTypes.string,
+  setFilterState: PropTypes.func,
+};
+
+export default NavTools;

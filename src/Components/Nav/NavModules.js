@@ -1,8 +1,9 @@
 import NavBtn from "./NavBtn";
 import NavBtnsGroup from "./NavBtnsGroup";
 import NavBtnsContainer from "./NavBtnsContainer";
+import PropTypes from "prop-types";
 
-export default function NavModules(props) {
+function NavModules(props) {
   const modules = [
     {
       id: "warehouse",
@@ -123,3 +124,11 @@ export default function NavModules(props) {
     </>
   );
 }
+
+NavModules.propTypes = {
+  addToFoldGroups: PropTypes.func.isRequired,
+  foldGroups: PropTypes.array.isRequired,
+  navBtnAction: PropTypes.func.isRequired,
+};
+
+export default NavModules;

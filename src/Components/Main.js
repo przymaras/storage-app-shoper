@@ -6,11 +6,12 @@ import Products from "./Modules/Products";
 import OrdersSales from "./Modules/OrdersSales";
 
 import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
 
-export default function Main(props) {
+function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
   const [activeTools, setActiveTools] = useState([]);
-  const [filterState, setFilterState] = useState([]);
+  const [filterState, setFilterState] = useState({});
   const [selectedItems, setSelectedItems] = useState([]);
   const foldGroups = [];
 
@@ -107,3 +108,10 @@ export default function Main(props) {
     </main>
   );
 }
+
+Main.propTypes = {
+  navModulesVisible: PropTypes.bool.isRequired,
+  navToolsVisible: PropTypes.bool.isRequired,
+};
+
+export default Main;

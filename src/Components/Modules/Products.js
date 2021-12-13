@@ -5,6 +5,7 @@ import { useState, useEffect, memo, useRef, useCallback } from "react";
 import SearchBar from "./SearchBar";
 
 import { commonSelectedItemsChange } from "./common";
+import PropTypes from "prop-types";
 
 function Products(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
@@ -251,5 +252,17 @@ function Products(props) {
     </>
   );
 }
+
+Products.propTypes = {
+  setActiveTools: PropTypes.func.isRequired,
+  filterState: PropTypes.exact({
+    showArchive: PropTypes.bool,
+    type: PropTypes.string,
+    mag_group: PropTypes.string,
+    supplier: PropTypes.string,
+  }).isRequired,
+  setSelectedItems: PropTypes.func.isRequired,
+  selectedItems: PropTypes.array.isRequired,
+};
 
 export default memo(Products);

@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
-export default function Header(props) {
+function Header(props) {
   return (
     <header>
       <h1 className="header-title">
@@ -29,3 +30,10 @@ export default function Header(props) {
     </header>
   );
 }
+
+Header.propTypes = {
+  toggleNavTools: PropTypes.func.isRequired,
+  toggleNavModules: PropTypes.func.isRequired,
+};
+
+export default Header;

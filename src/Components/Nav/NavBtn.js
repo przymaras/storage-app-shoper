@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
-export default function NavBtn(props) {
+function NavBtn(props) {
   return (
     <button
       onClick={(e) => props.navBtnAction(props.id, props.groupId)}
@@ -14,3 +15,12 @@ export default function NavBtn(props) {
 }
 
 NavBtn.defaultProps = { grouped: false, groupId: "not-in-group" };
+
+NavBtn.propTypes = {
+  navBtnAction: PropTypes.func.isRequired,
+  icon: PropTypes.array.isRequired,
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
+export default NavBtn;

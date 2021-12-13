@@ -1,6 +1,7 @@
 import { memo } from "react/cjs/react.development";
+import PropTypes from "prop-types";
 
-function Cell(props) {
+function RowCell(props) {
   return props.type === "checkbox" ? (
     <div className="cell">
       <input
@@ -18,4 +19,12 @@ function Cell(props) {
   );
 }
 
-export default memo(Cell);
+RowCell.propTypes = {
+  handleClick: PropTypes.func,
+  type: PropTypes.string,
+  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  checked: PropTypes.bool,
+};
+
+export default memo(RowCell);

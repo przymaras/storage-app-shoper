@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
-export default function NavContainer(props) {
+function NavContainer(props) {
   return (
     <nav
       className={`nav-overlay ${props.visible ? null : "hide-overlay"}`}
@@ -17,3 +18,14 @@ export default function NavContainer(props) {
     </nav>
   );
 }
+
+NavContainer.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
+  visible: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
+    .isRequired,
+};
+
+export default NavContainer;

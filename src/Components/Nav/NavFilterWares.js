@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState, useRef } from "react";
 import { useToggler } from "../../hooks/useToggler";
+import PropTypes from "prop-types";
 
-export default function NavFilter(props) {
+function NavFilter(props) {
   const [visible, toggleVisible] = useToggler(false);
 
   const setMainFilterState = props.setFilterState;
@@ -120,3 +121,9 @@ export default function NavFilter(props) {
     </div>
   );
 }
+
+NavFilter.propTypes = {
+  setFilterState: PropTypes.func.isRequired,
+};
+
+export default NavFilter;

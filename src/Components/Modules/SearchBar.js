@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react/cjs/react.development";
+import PropTypes from "prop-types";
 
-export default function SearchBar(props) {
+function SearchBar(props) {
   const [searchValue, setSearchValue] = useState("");
 
   const parentHandleChange = props.parentHandleChange;
@@ -31,3 +32,14 @@ export default function SearchBar(props) {
     </div>
   );
 }
+
+SearchBar.defaultProps = {
+  placeholder: "Wyszukaj...",
+};
+
+SearchBar.propTypes = {
+  placeholder: PropTypes.string,
+  parentHandleChange: PropTypes.func.isRequired,
+};
+
+export default SearchBar;

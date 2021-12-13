@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
-export default function Module(props) {
+function Module(props) {
   return (
     <section className="module">
       <h2 className="section-title">
@@ -14,3 +15,12 @@ export default function Module(props) {
     </section>
   );
 }
+
+Module.propTypes = {
+  name: PropTypes.string.isRequired,
+  icon: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
+    .isRequired,
+};
+
+export default Module;
