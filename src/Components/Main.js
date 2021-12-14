@@ -6,6 +6,7 @@ import Wares from "./Modules/Wares";
 import Ware from "./Modules/Ware";
 import OrdersSales from "./Modules/OrdersSales";
 import Modal from "./Modules/Modal";
+import Ok from "./Modules/Ok";
 import { waresTools } from "../tools/waresTools";
 
 import { useEffect, useState } from "react";
@@ -94,6 +95,14 @@ function Main(props) {
             </>
           }
         >
+          <Route
+            path="edit/ok"
+            element={
+              <Modal>
+                <Ok url="/module-wares" />
+              </Modal>
+            }
+          />
           <Route
             path="edit/:id"
             element={

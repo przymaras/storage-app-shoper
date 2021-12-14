@@ -33,6 +33,11 @@ body {
   height: 100vh;
 }
 
+input {
+  font-family: Roboto, sans-serif;
+  font-size: 1.8rem;
+}
+
 .container {
   background: var(--primary-color);
   height: 100%;
@@ -420,23 +425,64 @@ header {
 }
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   background: rgba(150, 150, 150, 0.9);
   z-index: 9999;
+  overflow-y: auto;
 }
 
+.modal-container {
+  width: 100%;
+  max-width: 400px;
+  border: 2px solid var(--primary-color-dark);
+  padding: 1em;
+  margin: 0.5em;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  box-shadow: 5px 5px 10px #555;
+  background: var(--primary-color-light);
+}
+
+.modal-container h2 {
+  align-self: center;
+  text-align: center;
+}
+
+.ware {
+  display: flex;
+  flex-direction: column;
+}
+
+.ware input {
+  width: 100%;
+  margin-bottom: 0.5em;
+  padding: 0.2em;
+}
+
+.align-self-center {
+  align-self: center;
+  width: 50%;
+}
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
+
+@media (min-height: 850px) {
+  .modal {
+    position: absolute;
+    align-items: center;
+  }
+}
 
 @media (max-width: 400px) {
   /* html,

@@ -1,5 +1,5 @@
 function waresTools(id, selectedItems, navigate) {
-  console.log(id, selectedItems);
+  //   console.log(id, selectedItems);
   if (id === "tool-wares-edit") {
     if (selectedItems.length > 1) {
       alert("Zaznacz tylko jedną pozycję!");
