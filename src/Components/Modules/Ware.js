@@ -124,7 +124,7 @@ function Ware(props) {
           name="shoper_id"
           value={wareData.shoper_id}
         />
-        <button className="btn nav-btn align-self-center">ZAPISZ</button>
+        <button className="btn nav-btn modal-btn">ZAPISZ</button>
       </form>
       <button
         onClick={() => {
@@ -136,7 +136,7 @@ function Ware(props) {
             navigate("/module-wares");
           }
         }}
-        className="btn nav-btn align-self-center"
+        className="btn nav-btn modal-btn"
       >
         POWRÓT
       </button>

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-function Ok(props) {
+function Info(props) {
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
@@ -9,7 +9,7 @@ function Ok(props) {
       window.location.reload(true);
     }, 1500);
   }, [navigate, props]);
-  return <h2>Ok</h2>;
+  return <h2>{props.message}</h2>;
 }
 
-export default Ok;
+export default Info;

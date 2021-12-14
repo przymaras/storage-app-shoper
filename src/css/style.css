@@ -440,7 +440,7 @@ header {
 
 .modal-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 550px;
   border: 2px solid var(--primary-color-dark);
   padding: 1em;
   margin: 0.5em;
@@ -467,9 +467,9 @@ header {
   padding: 0.2em;
 }
 
-.align-self-center {
+.modal-btn {
   align-self: center;
-  width: 50%;
+  width: 150px;
 }
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */

@@ -29,7 +29,8 @@ function NavFilter(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.setFilterState(filterState);
+    setMainFilterState(filterState);
+    localStorage.setItem("filter_wares", JSON.stringify(filterState));
   }
 
   function handleReset(e) {
@@ -37,7 +38,14 @@ function NavFilter(props) {
   }
 
   useEffect(() => {
-    setMainFilterState(defaultFilterState.current);
+    const filter =
+      JSON.parse(localStorage.getItem("filter_wares")) ||
+      defaultFilterState.current;
+    setMainFilterState(filter);
+    setFilterState(filter);
+    return () => {
+      localStorage.removeItem("filter_wares");
+    };
   }, [setMainFilterState, defaultFilterState]);
 
   return (

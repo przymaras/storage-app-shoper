@@ -15,12 +15,12 @@ function SearchBar(props) {
   //   parentHandleChange(searchValue);
   // }, [searchValue, parentHandleChange]);
   useEffect(() => {
-    const savedSearchValue = localStorage.getItem("search_value");
+    const savedSearchValue = localStorage.getItem("search_value") || [];
     if (savedSearchValue.length > 0) {
       setSearchValue(savedSearchValue);
     }
     return () => {
-      localStorage.setItem("search_value", "");
+      localStorage.removeItem("search_value", "");
     };
   }, []);
 

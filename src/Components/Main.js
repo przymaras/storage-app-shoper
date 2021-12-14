@@ -6,7 +6,7 @@ import Wares from "./Modules/Wares";
 import Ware from "./Modules/Ware";
 import OrdersSales from "./Modules/OrdersSales";
 import Modal from "./Modules/Modal";
-import Ok from "./Modules/Ok";
+import Info from "./Modules/Info";
 import { waresTools } from "../tools/waresTools";
 
 import { useEffect, useState } from "react";
@@ -99,7 +99,7 @@ function Main(props) {
             path="edit/ok"
             element={
               <Modal>
-                <Ok backUrl="/module-wares" />
+                <Info message="Zapisuję..." backUrl="/module-wares" />
               </Modal>
             }
           />
