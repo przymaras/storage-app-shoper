@@ -4,15 +4,15 @@ import { useState, useEffect, memo, useRef, useCallback } from "react";
 
 import SearchBar from "./SearchBar";
 
-import { commonSelectedItemsChange } from "./common";
+import { commonSelectedItemsChange } from "../../tools/commonTools";
 import PropTypes from "prop-types";
 
-function Products(props) {
+function Wares(props) {
   const [dataAvailable, setDataAvailable] = useState(false);
   const [info, setInfo] = useState("Ładuję dane ...");
-  const [productsToDisplay, setProductsToDisplay] = useState([]);
-  // const [allProducts, setAllProducts] = useState([]);
-  const allProducts = useRef([]);
+  const [waresToDisplay, setWaresToDisplay] = useState([]);
+  // const [allWares, setAllWares] = useState([]);
+  const allWares = useRef([]);
 
   const setActiveTools = props.setActiveTools;
   const setSelectedItems = props.setSelectedItems;
@@ -25,7 +25,7 @@ function Products(props) {
     { id: "lacking" },
     { id: "ordered" },
     { id: "price" },
-    { id: "product_id" },
+    { id: "id" },
     { id: "supplier" },
     { id: "supplier_code" },
     { id: "type" },
@@ -42,7 +42,7 @@ function Products(props) {
     lacking: "Braku\xADjące",
     needed: "Zapotrze\xADbowanie",
     price: "Cena",
-    product_id: "Kod",
+    id: "Kod",
     supplier: "Dostawca",
     supplier_code: "Kod u dostawcy",
     type: "Typ",
@@ -53,13 +53,38 @@ function Products(props) {
   useEffect(() => {
     const tools = [
       {
-        id: "tool-wares1",
-        name: "NARZĘDZIE 1",
+        id: "tool-wares-add-new",
+        name: "DODAJ NOWY",
         icon: ["fab", "algolia"],
       },
       {
-        id: "tool-wares2",
-        name: "NARZĘDZIE 2",
+        id: "tool-wares-edit",
+        name: "EDYTUJ",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares-clone",
+        name: "KLONUJ",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares-release",
+        name: "WYDAJ",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares-combine",
+        name: "KOMPLETUJ",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares-uncombine",
+        name: "DEKOMPLETUJ",
+        icon: ["fab", "algolia"],
+      },
+      {
+        id: "tool-wares-delete",
+        name: "USUŃ",
         icon: ["fab", "algolia"],
       },
     ];
@@ -78,22 +103,22 @@ function Products(props) {
       return data;
     }
     if (props.filterState.mag_group) {
-      const url = `http://localhost:3030/products?mag_group=${props.filterState.mag_group}&supplier=${props.filterState.supplier}&type=${props.filterState.type}&showArchive=${props.filterState.showArchive}`;
+      const url = `http://localhost:3030/wares?mag_group=${props.filterState.mag_group}&supplier=${props.filterState.supplier}&type=${props.filterState.type}&showArchive=${props.filterState.showArchive}`;
       getData(url)
         .then((data) => {
           //Temporarly fill with dummy data
-          const prods = data.map((product) => {
+          const wares = data.map((ware) => {
             return {
-              ...product,
+              ...ware,
               ordered: 1000,
               lacking: 1000,
               needed: 1000,
             };
           });
           setDataAvailable(true);
-          // setAllProducts(prods);
-          allProducts.current = [...prods];
-          setProductsToDisplay(prods);
+          // setAllWares(wares);
+          allWares.current = [...wares];
+          setWaresToDisplay(wares);
         })
         .catch((e) => {
           setDataAvailable(false);
@@ -110,34 +135,34 @@ function Products(props) {
 
   const handleSearchValueChange = useCallback(
     (value) => {
-      let newProducts = [...allProducts.current];
+      let newWares = [...allWares.current];
 
       try {
-        newProducts = newProducts.filter((product) => {
-          const nameIncludesValue = product.name
+        newWares = newWares.filter((ware) => {
+          const nameIncludesValue = ware.name
             .toUpperCase()
             .includes(value.toUpperCase());
 
-          const idIncludesValue = product.product_id.toString().includes(value);
+          const idIncludesValue = ware.id.toString().includes(value);
 
           if (nameIncludesValue || idIncludesValue) return true;
           else return false;
         });
-        setProductsToDisplay(newProducts);
+        setWaresToDisplay(newWares);
       } catch (e) {
         console.error("Error in search conditions or data structure.");
       }
       setSelectedItems([]);
     },
-    [allProducts, setSelectedItems]
+    [allWares, setSelectedItems]
   );
 
   function localSelectedItemsChange(id) {
     commonSelectedItemsChange(
       id,
-      headingCells.product_id,
-      productsToDisplay,
-      "product_id",
+      headingCells.id,
+      waresToDisplay,
+      "id",
       props.selectedItems,
       setSelectedItems
     );
@@ -146,31 +171,31 @@ function Products(props) {
   function sortByColumn(e) {
     const sortBy = e.target.id;
     if (dataAvailable) {
-      sortProducts(allProducts.current, setAllProducts, sortBy);
-      sortProducts(productsToDisplay, setProductsToDisplay, sortBy);
+      sortWares(allWares.current, setAllWares, sortBy);
+      sortWares(waresToDisplay, setWaresToDisplay, sortBy);
     }
   }
 
-  function setAllProducts(prod) {
-    allProducts.current = [...prod];
+  function setAllWares(ware) {
+    allWares.current = [...ware];
   }
 
-  function sortProducts(products, setNewProducts, sortBy) {
-    let newProducts = [...products];
-    if (typeof newProducts[0][sortBy] === "string") {
-      newProducts.sort((a, b) => {
+  function sortWares(wares, setNewWares, sortBy) {
+    let newWares = [...wares];
+    if (typeof newWares[0][sortBy] === "string") {
+      newWares.sort((a, b) => {
         if (a[sortBy].toUpperCase() < b[sortBy].toUpperCase()) return -1;
         if (a[sortBy].toUpperCase() > b[sortBy].toUpperCase()) return 1;
 
         return 0;
       });
     } else {
-      newProducts.sort((a, b) => {
+      newWares.sort((a, b) => {
         return a[sortBy] - b[sortBy];
       });
     }
 
-    setNewProducts(newProducts);
+    setNewWares(newWares);
   }
 
   function renderRowCells(cells) {
@@ -205,7 +230,7 @@ function Products(props) {
       return (
         <RowCell
           handleClick={cells.heading ? sortByColumn : null}
-          key={`${cells.product_id}_${cell.id}`}
+          key={`${cells.id}_${cell.id}`}
           name={cell.id}
           id={cell.id}
         >
@@ -218,23 +243,23 @@ function Products(props) {
     sortedCells.unshift(
       <RowCell
         handleClick={localSelectedItemsChange}
-        key={`${cells.product_id}_cb`}
+        key={`${cells.id}_cb`}
         type="checkbox"
-        name={cells.product_id}
-        id={cells.product_id}
-        checked={props.selectedItems.includes(cells.product_id)}
+        name={cells.id}
+        id={cells.id}
+        checked={props.selectedItems.includes(cells.id)}
       />
     );
 
     return sortedCells;
   }
 
-  function renderProductsRows(p) {
+  function renderWaresRows(w) {
     let rows = [];
-    for (let product of p) {
+    for (let ware of w) {
       rows.push(
-        <Row key={product.product_id} rowClass="module-wares-row">
-          {renderRowCells(product)}
+        <Row key={ware.id} rowClass="module-wares-row">
+          {renderRowCells(ware)}
         </Row>
       );
     }
@@ -251,13 +276,13 @@ function Products(props) {
         <Row heading={true} rowClass="module-wares-row">
           {renderRowCells(headingCells)}
         </Row>
-        {dataAvailable ? renderProductsRows(productsToDisplay) : info}
+        {dataAvailable ? renderWaresRows(waresToDisplay) : info}
       </div>
     </>
   );
 }
 
-Products.propTypes = {
+Wares.propTypes = {
   setActiveTools: PropTypes.func.isRequired,
   filterState: PropTypes.exact({
     showArchive: PropTypes.bool,
@@ -269,4 +294,4 @@ Products.propTypes = {
   selectedItems: PropTypes.array.isRequired,
 };
 
-export default memo(Products);
+export default memo(Wares);

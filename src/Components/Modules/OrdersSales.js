@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 
 import SearchBar from "./SearchBar";
 
-import { commonSelectedItemsChange } from "./common";
+import { commonSelectedItemsChange } from "../../tools/commonTools";
 
 function OrdersSales(props) {
   const [ordersAvailable, setOrdersAvailable] = useState(false);

@@ -66,7 +66,7 @@ header {
   padding: 1em;
   background: var(--primary-color);
   text-align: center;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .header-title .svg-inline--fa {
@@ -95,7 +95,7 @@ header {
   display: flex;
   justify-content: space-between;
   position: relative;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .nav-toggle--button {
@@ -113,7 +113,7 @@ header {
 
 .nav-overlay {
   position: absolute;
-  z-index: 9998;
+  z-index: 998;
   background: rgba(150, 150, 150, 0.8);
   top: 0;
   bottom: 0;
@@ -399,7 +399,7 @@ header {
 .row-sticky {
   position: sticky;
   top: 0;
-  z-index: 999;
+  z-index: 99;
 }
 
 .module--row .cell {
@@ -417,6 +417,19 @@ header {
 
 .module--row:nth-child(even) .cell {
   background: var(--primary-color-light);
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(150, 150, 150, 0.9);
+  z-index: 9999;
 }
 
 /* MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA MEDIA */
@@ -541,6 +554,11 @@ header {
   .section-title {
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
+  }
+
+  .modal {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
   }
 
   /* nav nav nav nav nav nav nav nav nav */

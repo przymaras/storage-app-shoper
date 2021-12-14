@@ -2,13 +2,16 @@ import NavContainer from "./Nav/NavContainer";
 import NavModules from "./Nav/NavModules";
 import NavTools from "./Nav/NavTools";
 import ModuleContainer from "./Modules/ModuleContainer";
-import Products from "./Modules/Products";
+import Wares from "./Modules/Wares";
+import Ware from "./Modules/Ware";
 import OrdersSales from "./Modules/OrdersSales";
+import Modal from "./Modules/Modal";
+import { waresTools } from "../tools/waresTools";
 
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate, Outlet } from "react-router-dom";
 
 function Main(props) {
   const [activeModule, setActiveModule] = useState("module-wares");
@@ -17,7 +20,7 @@ function Main(props) {
   const [selectedItems, setSelectedItems] = useState([]);
   const foldGroups = [];
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   function addToFoldGroups(f, id) {
     const thisGroupIsNotInArray = !foldGroups.some((group) => group.id === id);
@@ -28,57 +31,23 @@ function Main(props) {
     setSelectedItems([]);
   }, [filterState]);
 
-  function navBtnAction(id, groupId) {
-    if (id.includes("module-")) {
-      navigate(`${id}`);
-      setActiveModule(id);
-      setSelectedItems([]);
-      foldGroups.forEach((foldGroup) => {
-        //fold all btn groups but if click comes from active group that is unfolded - don't fold it
-        if (groupId !== foldGroup.id) {
-          foldGroup.f();
-        }
-      });
-    }
-
-    if (id.includes("tool-")) {
-      console.log(selectedItems);
-    }
+  function navModulesBtnAction(id, groupId) {
+    navigate(`${id}`);
+    setActiveModule(id);
+    setSelectedItems([]);
+    foldGroups.forEach((foldGroup) => {
+      //fold all btn groups but if click comes from active group that is unfolded - don't fold it
+      if (groupId !== foldGroup.id) foldGroup.f();
+    });
   }
 
-  // function renderModule(module) {
-  //   switch (module) {
-  //     case "module-wares":
-  //       return (
-  //         <ModuleContainer name="Asortyment" icon="luggage-cart">
-  //           <Products
-  //             setActiveTools={setActiveTools}
-  //             filterState={filterState}
-  //             setSelectedItems={setSelectedItems}
-  //             selectedItems={selectedItems}
-  //           />
-  //         </ModuleContainer>
-  //       );
-  //     case "module-ordersSales":
-  //       return (
-  //         <ModuleContainer name="Zamówienia sprzedaży" icon="luggage-cart">
-  //           <OrdersSales
-  //             setActiveTools={setActiveTools}
-  //             setSelectedItems={setSelectedItems}
-  //             selectedItems={selectedItems}
-  //           />
-  //         </ModuleContainer>
-  //       );
-
-  //     default:
-  //       if (activeTools[0]) setActiveTools([]);
-  //       return (
-  //         <ModuleContainer name="Moduł nie znaleziony" icon="luggage-cart">
-  //           Moduł nie został jeszcze zaimplementowany ... sorry ;)
-  //         </ModuleContainer>
-  //       );
-  //   }
-  // }
+  function navToolsBtnAction(id) {
+    if (id.includes("tool-wares")) {
+      waresTools(id, selectedItems, navigate);
+    } else if (id.includes("tool-ordersSales")) {
+      console.log("tool-ordersSales", selectedItems);
+    }
+  }
 
   return (
     <main className="main">
@@ -91,7 +60,7 @@ function Main(props) {
         <NavModules
           addToFoldGroups={addToFoldGroups}
           foldGroups={foldGroups}
-          navBtnAction={navBtnAction}
+          navBtnAction={navModulesBtnAction}
         />
       </NavContainer>
       <NavContainer
@@ -104,7 +73,7 @@ function Main(props) {
           activeModule={activeModule}
           activeTools={activeTools}
           setFilterState={setFilterState}
-          navBtnAction={navBtnAction}
+          navBtnAction={navToolsBtnAction}
         />
       </NavContainer>
       <Routes>
@@ -112,16 +81,28 @@ function Main(props) {
         <Route
           path="/module-wares"
           element={
-            <ModuleContainer name="Asortyment" icon="luggage-cart">
-              <Products
-                setActiveTools={setActiveTools}
-                filterState={filterState}
-                setSelectedItems={setSelectedItems}
-                selectedItems={selectedItems}
-              />
-            </ModuleContainer>
+            <>
+              <ModuleContainer name="Asortyment" icon="luggage-cart">
+                <Wares
+                  setActiveTools={setActiveTools}
+                  filterState={filterState}
+                  setSelectedItems={setSelectedItems}
+                  selectedItems={selectedItems}
+                />
+              </ModuleContainer>
+              <Outlet />
+            </>
           }
-        />
+        >
+          <Route
+            path="edit/:id"
+            element={
+              <Modal>
+                <Ware />
+              </Modal>
+            }
+          />
+        </Route>
         <Route
           path="/module-ordersSales"
           element={
