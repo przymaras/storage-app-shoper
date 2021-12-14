@@ -4,7 +4,9 @@ function Ok(props) {
   const navigate = useNavigate();
   useEffect(() => {
     setTimeout(() => {
-      navigate(props.url);
+      navigate(props.backUrl);
+      //force refresh page for change to be visible
+      window.location.reload(true);
     }, 1500);
   }, [navigate, props]);
   return <h2>Ok</h2>;

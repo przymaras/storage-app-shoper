@@ -99,7 +99,7 @@ function Main(props) {
             path="edit/ok"
             element={
               <Modal>
-                <Ok url="/module-wares" />
+                <Ok backUrl="/module-wares" />
               </Modal>
             }
           />

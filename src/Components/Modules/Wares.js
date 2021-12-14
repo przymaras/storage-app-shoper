@@ -118,7 +118,10 @@ function Wares(props) {
           setDataAvailable(true);
           // setAllWares(wares);
           allWares.current = [...wares];
-          setWaresToDisplay(wares);
+          const savedSearchValue = localStorage.getItem("search_value");
+          savedSearchValue
+            ? handleSearchValueChange(savedSearchValue)
+            : setWaresToDisplay(wares);
         })
         .catch((e) => {
           setDataAvailable(false);
@@ -126,6 +129,7 @@ function Wares(props) {
           console.error("Can't load data...");
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     props.filterState.mag_group,
     props.filterState.supplier,
@@ -153,6 +157,8 @@ function Wares(props) {
         console.error("Error in search conditions or data structure.");
       }
       setSelectedItems([]);
+      localStorage.setItem("search_value", value);
+      console.log("hsvc run");
     },
     [allWares, setSelectedItems]
   );

@@ -7,13 +7,22 @@ function SearchBar(props) {
 
   const parentHandleChange = props.parentHandleChange;
 
-  function handleChange(e) {
-    setSearchValue(e.target.value);
+  function handleChange(value) {
+    setSearchValue(value);
+    parentHandleChange(value);
   }
-
+  // useEffect(() => {
+  //   parentHandleChange(searchValue);
+  // }, [searchValue, parentHandleChange]);
   useEffect(() => {
-    parentHandleChange(searchValue);
-  }, [searchValue, parentHandleChange]);
+    const savedSearchValue = localStorage.getItem("search_value");
+    if (savedSearchValue.length > 0) {
+      setSearchValue(savedSearchValue);
+    }
+    return () => {
+      localStorage.setItem("search_value", "");
+    };
+  }, []);
 
   return (
     <div className="search-form">
@@ -27,7 +36,7 @@ function SearchBar(props) {
         id="search"
         placeholder={props.placeholder}
         value={searchValue}
-        onChange={handleChange}
+        onChange={(e) => handleChange(e.target.value)}
       />
     </div>
   );
