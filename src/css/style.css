@@ -275,6 +275,10 @@ header {
   justify-content: space-between;
 }
 
+.filter-header:only-child {
+  justify-content: center;
+}
+
 .filter-btn .svg-inline--fa {
   font-size: 2em;
 }
@@ -305,10 +309,6 @@ header {
 .filter-options-toggle-btn {
   font-size: 2.5rem;
   font-weight: bold;
-}
-
-.filter-options-folded {
-  display: none;
 }
 
 .btn,
