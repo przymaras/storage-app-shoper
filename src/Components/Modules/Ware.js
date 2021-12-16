@@ -18,8 +18,8 @@ function Ware(props) {
     const url = `http://localhost:3030/wares/${params.id}`;
     getData(url)
       .then((data) => {
-        setDataAvailable(true);
         setWareData(...data);
+        setDataAvailable(true);
       })
       .catch((e) => {
         setDataAvailable(false);

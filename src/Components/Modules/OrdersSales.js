@@ -134,12 +134,6 @@ function OrdersSales(props) {
 
 OrdersSales.propTypes = {
   setActiveTools: PropTypes.func.isRequired,
-  filterState: PropTypes.exact({
-    showArchive: PropTypes.bool,
-    type: PropTypes.string,
-    mag_group: PropTypes.string,
-    supplier: PropTypes.string,
-  }).isRequired,
   setSelectedItems: PropTypes.func.isRequired,
   selectedItems: PropTypes.array.isRequired,
 };

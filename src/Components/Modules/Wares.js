@@ -237,7 +237,6 @@ function Wares(props) {
         <RowCell
           handleClick={cells.heading ? sortByColumn : null}
           key={`${cells.id}_${cell.id}`}
-          name={cell.id}
           id={cell.id}
         >
           {cell.value}

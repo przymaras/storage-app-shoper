@@ -19,8 +19,11 @@ function Module(props) {
 Module.propTypes = {
   name: PropTypes.string.isRequired,
   icon: PropTypes.oneOfType([PropTypes.array, PropTypes.string]).isRequired,
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.element])
-    .isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.element,
+    PropTypes.string,
+  ]).isRequired,
 };
 
 export default Module;

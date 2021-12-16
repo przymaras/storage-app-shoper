@@ -7,7 +7,6 @@ function RowCell(props) {
       <input
         type="checkbox"
         id={props.id}
-        name={props.name}
         checked={props.checked}
         onChange={() => props.handleClick(props.id)}
       />
@@ -22,7 +21,6 @@ function RowCell(props) {
 RowCell.propTypes = {
   handleClick: PropTypes.func,
   type: PropTypes.string,
-  name: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   checked: PropTypes.bool,
 };
